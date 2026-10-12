@@ -11,7 +11,7 @@
 .wrap{max-width:1080px;margin:0 auto}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{height:46px;width:46px;border-radius:14px;background:linear-gradient(135deg,#f5c15d,#a96d12);display:grid;place-items:center;color:#201708;font-weight:900;font-size:20px;box-shadow:0 5px 16px #b779132b}.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:800}.brand h1{font-size:24px;margin:0;letter-spacing:-.03em}.sub{color:var(--muted);margin:2px 0 0;font-size:13px}
 .layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:18px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 8px 28px #00000008}.panel h2{font-size:17px;margin:0 0 4px;letter-spacing:-.02em}.hint{font-size:12px;color:var(--muted);margin:0 0 20px}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}.field label{font-size:12px;font-weight:750;color:var(--muted)}input,select{width:100%;border:1px solid var(--line);background:var(--input);color:var(--text);border-radius:11px;padding:12px 12px;font:inherit;outline:none;min-height:46px}input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px #d99d2920}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.btn{border:0;border-radius:12px;background:linear-gradient(135deg,#e8b54e,#c88719);color:#201708;font-weight:850;padding:13px 16px;cursor:pointer;font:inherit;font-weight:800;width:100%;min-height:48px}.btn.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}.btnrow{display:flex;gap:10px;margin-top:8px}.result{background:linear-gradient(145deg,light-dark(#fff9eb,#2a2419),var(--surface));border:1px solid light-dark(#f0d69e,#6b542e);border-radius:18px;padding:20px;margin:18px 0}.resultTop{display:flex;justify-content:space-between;gap:10px;align-items:center}.pill{font-size:11px;font-weight:800;background:light-dark(#e7f5ec,#1c4432);color:var(--green);padding:5px 9px;border-radius:99px}.amount{font-size:clamp(27px,4vw,38px);font-weight:900;letter-spacing:-.04em;margin:7px 0;color:var(--gold)}.muted{color:var(--muted)}.breakdown{border-top:1px solid var(--line);margin-top:14px;padding-top:12px;display:grid;gap:9px}.line{display:flex;justify-content:space-between;gap:14px;font-size:13px}.line strong{font-variant-numeric:tabular-nums;text-align:right}.line.total{font-size:15px;font-weight:850;padding-top:9px;border-top:1px dashed var(--line)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}.stat{background:var(--input);border:1px solid var(--line);padding:11px;border-radius:12px}.stat b{display:block;font-size:17px}.stat span{font-size:11px;color:var(--muted)}.section{margin-top:22px}.section h3{font-size:14px;margin:0 0 10px}.rates{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.rate{border:1px solid var(--line);border-radius:12px;padding:12px}.rate b{display:block;font-size:12px}.rate strong{display:block;color:var(--gold);font-size:16px;margin:3px 0}.rate small{color:var(--muted);font-size:11px}.note{font-size:11px;color:var(--muted);margin-top:14px}.status{font-size:12px;color:var(--green);min-height:18px;margin-top:8px}.hidden{display:none}
 
-.payment-section{padding:14px;background:#fffdf8;border:1px solid #ead9b3;border-radius:16px;color:#17212b}
+.promo-options{display:flex;flex-wrap:wrap;gap:10px}.promo-options label{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;font-weight:750;color:var(--text);cursor:pointer}.promo-options input{width:16px;min-height:16px;height:16px;margin:0;accent-color:#b77913}.payment-section{padding:14px;background:#fffdf8;border:1px solid #ead9b3;border-radius:16px;color:#17212b}
 .qr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .qr-card{border:1px solid #e1e5e9;border-radius:14px;padding:12px;text-align:center;background:#fff;min-width:0}
 .qr-card h4{font-size:15px;margin:0 0 5px;color:#17212b}.qr-amount{font-weight:900;font-size:19px;color:#9b6811;margin-bottom:8px;overflow-wrap:anywhere}
@@ -88,6 +88,8 @@
 <div class="field"><label for="site">CƠ SỞ</label><select id="site"><option value="ndh">NĐH – Cầu Giấy · Số 60, ngõ 144 Nguyễn Đình Hoàn</option><option value="llq">LLQ – Tây Hồ · Số 16, hẻm 51/2, ngõ 89 Lạc Long Quân</option><option value="dc">Đội Cấn – Ba Đình · Số 10, ngách 222F, ngõ 260 Đội Cấn</option></select></div>
 <div class="two"><div class="field"><label for="room">MÃ PHÒNG</label><select id="room"></select></div><div class="field"><label for="type">HẠNG PHÒNG</label><input id="type" readonly></div></div>
 <div class="two"><div class="field"><label for="checkin">CHECK-IN</label><input type="datetime-local" id="checkin"></div><div class="field"><label for="checkout">CHECK-OUT</label><input type="datetime-local" id="checkout"></div></div>
+<div class="two"><div class="field"><label for="customerName">TÊN KHÁCH HÀNG</label><input id="customerName" type="text" placeholder="Nhập tên khách hàng"></div><div class="field"><label for="guestCount">SỐ LƯỢNG NGƯỜI Ở</label><input id="guestCount" type="number" min="1" step="1" value="2" placeholder="Nhập số người ở"></div></div>
+<div class="field"><label>GIÁ KHUYẾN MÃI QUA ĐÊM ĐẾN 10:00 HÔM SAU</label><div class="promo-options"><label><input type="radio" name="promoNight" value="0" checked> Không áp dụng</label><label><input type="radio" name="promoNight" value="300000"> 300.000đ</label><label><input type="radio" name="promoNight" value="400000"> 400.000đ</label></div><p class="note" style="margin-top:0">Giá khuyến mãi tính từ giờ check-in đến 10:00 sáng hôm sau. Nếu trả sau 10:00, thời gian vượt sẽ tính giờ dư theo bảng giá cơ sở.</p></div>
 <div class="two"><div class="field"><label for="discount">ƯU ĐÃI THEO TỪNG NGÀY</label><input id="discount" type="text" value="Tự động theo ngày" readonly></div><div class="field"><label for="manual">PHỤ THU / GIẢM TRỪ (VNĐ)</label><input id="manual" type="number" value="0" step="1000"></div></div>
 <div class="btnrow"><button class="btn" id="calc">Tính tiền phòng</button><button class="btn secondary" id="reset">Làm mới</button></div><div class="status" id="status" aria-live="polite"></div>
 <p class="note">Ưu đãi tự động theo ngày check-in: Thứ 2–5: 15%, Thứ 6–7: 5%, Chủ Nhật: 10%. Chỉ áp dụng ưu đãi cho thuê Qua đêm / Ngày đêm; thuê 2H / 3H không ưu đãi. Có thể nhập phụ thu/giảm trừ âm dương theo thực tế.</p>
@@ -107,11 +109,7 @@
 <div class="section payment-section" id="paymentSection">
 <h3>QR chuyển khoản ngân hàng MB</h3>
 <p class="note">Quét mã để chuyển khoản đúng số tiền. Mã QR tự cập nhật sau khi tính tiền; cần có kết nối Internet để tải mã.</p>
-<div class="field" style="margin:10px 0 14px">
-  <label for="senderAccountName">TÊN TÀI KHOẢN NGÂN HÀNG NGƯỜI CHUYỂN</label>
-  <input id="senderAccountName" type="text" placeholder="Nhập tên tài khoản người chuyển">
-  <p class="note" style="margin-top:0">Nội dung chuyển khoản QR: tên tài khoản người chuyển + “chuyển tiền”.</p>
-</div>
+<p class="note" style="margin-top:0">Nội dung chuyển khoản QR tự lấy tên khách hàng + “chuyển tiền”.</p>
 <div class="qr-grid">
  <article class="qr-card"><h4>Thanh toán 50%</h4><div class="qr-amount" id="halfAmount">—</div><img id="qrHalf" alt="Mã QR thanh toán 50%" loading="lazy"><p>Ngân hàng MB · STK 5919998888</p><a id="qrHalfLink" target="_blank" rel="noopener">Mở mã QR</a></article>
  <article class="qr-card"><h4>Thanh toán 100%</h4><div class="qr-amount" id="fullAmount">—</div><img id="qrFull" alt="Mã QR thanh toán toàn bộ" loading="lazy"><p>Ngân hàng MB · STK 5919998888</p><a id="qrFullLink" target="_blank" rel="noopener">Mở mã QR</a></article>
@@ -141,8 +139,8 @@ function setPaymentQRs(total){
  const half=valid?Math.round(total/2):0, full=valid?Math.round(total):0;
  $('halfAmount').textContent=valid?money(half):'—';$('fullAmount').textContent=valid?money(full):'—';
  const room=$('room').value||'';
- const senderName=(($('senderAccountName')?.value||'').trim());
-  const transferContent=[senderName, 'chuyển tiền'].filter(Boolean).join(' ');
+ const customerName=(($('customerName')?.value||'').trim());
+  const transferContent=[customerName, 'chuyển tiền'].filter(Boolean).join(' ');
   const makeUrl=(amount,tag)=>'https://img.vietqr.io/image/MB-5919998888-compact2.png?amount='+encodeURIComponent(amount)+'&addInfo='+encodeURIComponent(transferContent)+'&accountName='+encodeURIComponent('HO KINH DOANH SUNHOMESTAY');
  if(valid){const u1=makeUrl(half,'THANH TOAN 50 PCT'),u2=makeUrl(full,'THANH TOAN 100 PCT');$('qrHalf').src=u1;$('qrHalfLink').href=u1;$('qrFull').src=u2;$('qrFullLink').href=u2;}
  else {$('qrHalf').removeAttribute('src');$('qrFull').removeAttribute('src');$('qrHalfLink').removeAttribute('href');$('qrFullLink').removeAttribute('href');}
@@ -152,6 +150,14 @@ function calculate(){
  const start=new Date(ci),end=new Date(co),hours=(end-start)/36e5;if(!Number.isFinite(hours)||hours<=0){blank();$('duration').textContent='Giờ check-out phải sau check-in.';$('status').textContent='Vui lòng kiểm tra lại thời gian.';return;}
  $('status').textContent='';const days=Math.max(0,Math.floor((new Date(end.getFullYear(),end.getMonth(),end.getDate())-new Date(start.getFullYear(),start.getMonth(),start.getDate()))/864e5));
  const site=$('site').value,type=$('type').value,price=rates[site][type];let kind,base=0,extra=0,discount=0;
+ const promoPrice=Number(document.querySelector('input[name="promoNight"]:checked')?.value||0);
+ if(promoPrice>0){
+   kind='Khuyến mãi đến 10:00';base=promoPrice;
+   const promoEnd=new Date(start.getFullYear(),start.getMonth(),start.getDate()+1,10,0,0,0);
+   const extraHours=Math.max(0,(end-promoEnd)/36e5);
+   extra=extraHours*price.over;
+   $('discount').value='Gói khuyến mãi';discount=0;
+ }else{
  // Quy ước qua đêm đặc biệt: nhận lúc 21:00 và trả lúc 10:00 ngày hôm sau.
  const overnightWindow=start.getHours()===21&&start.getMinutes()===0&&
    end.getHours()===10&&end.getMinutes()===0&&days===1;
@@ -176,6 +182,7 @@ function calculate(){
    if(extra>=price.night)discount+=extra*rateForDate(end)/100;
    $('discount').value=[...new Set(dailyRates)].map(p=>p+'%').join(' + ')+(extra>=price.night?' + giờ thêm':'');
  }else{$('discount').value='Không áp dụng';discount=0;}
+ } // kết thúc nhánh tính giá thông thường hoặc gói khuyến mãi
  // Làm tròn tiền ưu đãi xuống bội số 1.000đ (ví dụ 70.500đ thành 70.000đ).
  discount=Math.floor(discount/1000)*1000;
  const adj=Number($('manual').value)||0;const total=Math.max(0,base+extra-discount+adj);
@@ -183,8 +190,8 @@ function calculate(){
  $('kind').textContent=kind;$('base').textContent=money(base);$('extra').textContent=money(extra);$('saved').textContent='− '+money(discount);$('adjust').textContent=(adj>0?'+ ':adj<0?'− ':'')+money(Math.abs(adj));$('total').textContent=money(total);$('hours').textContent=hours.toLocaleString('vi-VN',{maximumFractionDigits:2});$('nights').textContent=days;$('perday').textContent=money(price.day);
  setPaymentQRs(total);$('status').textContent='Đã cập nhật phép tính.';
 }
-$('site').addEventListener('change',refreshRooms);$('room').addEventListener('change',()=>{updateType();calculate()});['checkin','checkout','discount','manual'].forEach(id=>$(id).addEventListener('input',calculate));$('senderAccountName').addEventListener('input',calculate);$('calc').addEventListener('click',calculate);
-$('reset').addEventListener('click',()=>{$('checkin').value='';$('checkout').value='';$('discount').value='Tự động theo ngày';$('manual').value='0';$('status').textContent='Đã làm mới thông tin thời gian.';blank();});
+$('site').addEventListener('change',refreshRooms);$('room').addEventListener('change',()=>{updateType();calculate()});['checkin','checkout','discount','manual'].forEach(id=>$(id).addEventListener('input',calculate));$('customerName').addEventListener('input',calculate);document.querySelectorAll('input[name="promoNight"]').forEach(el=>el.addEventListener('change',calculate));$('calc').addEventListener('click',calculate);
+$('reset').addEventListener('click',()=>{$('checkin').value='';$('checkout').value='';$('discount').value='Tự động theo ngày';$('manual').value='0';document.querySelector('input[name="promoNight"][value="0"]').checked=true;$('status').textContent='Đã làm mới thông tin thời gian.';blank();});
 
 function downloadReceipt(){
  if($('total').textContent==='—'||!$('checkin').value||!$('checkout').value){$('copystatus').textContent='Vui lòng nhập giờ và tính tiền trước khi tạo ảnh.';return;}
@@ -193,13 +200,15 @@ function downloadReceipt(){
  const siteText=$('site').selectedOptions[0].text.split(' · ')[0];
  const branch=$('site').selectedOptions[0].text.split(' · ').slice(1).join(' · ');
  const rows=[
-  ['Phòng',$('roomTitle').textContent],
+  ['Tên khách hàng',$('customerName').value.trim()||'—'],
+   ['Số lượng người ở',$('guestCount').value||'—'],
+   ['Phòng',$('roomTitle').textContent],
   ['Thời gian nhận phòng',$('checkin').value.replace('T','  ')],
   ['Thời gian trả phòng',$('checkout').value.replace('T','  ')],
   ['Hình thức thuê',$('kind').textContent],
   ['Tiền phòng',$('base').textContent],
   ['Tiền giờ thêm / phụ trội',$('extra').textContent],
-  ['Ưu đãi',$('saved').textContent],
+  ['Ưu đãi',$('saved').textContent.replace(/^[−-]\s*/, '')],
   ['Phụ thu / giảm trừ',$('adjust').textContent]
  ];
  const H=330+rows.length*rowH+100;canvas.width=W;canvas.height=H;
@@ -223,11 +232,11 @@ function downloadReceipt(){
  ctx.fillStyle='#17212b';ctx.font='bold 25px Arial';ctx.fillText('TỔNG THANH TOÁN',x+54,yy+32);
  ctx.textAlign='right';ctx.fillStyle='#b77913';ctx.font='bold 38px Arial';ctx.fillText($('total').textContent,x+w-54,yy+38);
  ctx.textAlign='center';ctx.fillStyle='#687684';ctx.font='18px Arial';ctx.fillText('Cảm ơn quý khách đã lựa chọn Sun Homestay!',W/2,H-70);
- const a=document.createElement('a');a.download='Sun-Homestay-phieu-thanh-toan.png';a.href=canvas.toDataURL('image/png');a.click();$('copystatus').textContent='Đã tạo ảnh phiếu thanh toán để gửi khách.';
+ const a=document.createElement('a');const customerFileName=($('customerName').value||'').trim().replace(/[\\/:*?"<>|]/g,'-').replace(/\s+/g,' ').slice(0,80);a.download=(customerFileName?customerFileName+' - phieu thanh toan':'Sun-Homestay-phieu-thanh-toan')+'.png';a.href=canvas.toDataURL('image/png');a.click();$('copystatus').textContent='Đã tạo ảnh phiếu thanh toán để gửi khách.';
 }
 $('downloadReceipt').addEventListener('click',downloadReceipt);
 
-$('copy').addEventListener('click',async()=>{const txt=`SUN HOMESTAY\nCơ sở: ${$('site').selectedOptions[0].text}\n${$('roomTitle').textContent}\nCheck-in: ${$('checkin').value.replace('T',' ')}\nCheck-out: ${$('checkout').value.replace('T',' ')}\nLoại thuê: ${$('kind').textContent}\nTổng thanh toán: ${$('total').textContent}\nNội dung chuyển khoản: ${[(($('senderAccountName')?.value||'').trim()),'chuyển tiền'].filter(Boolean).join(' ')}`;try{await navigator.clipboard.writeText(txt);$('copystatus').textContent='Đã sao chép thông tin.';}catch(e){$('copystatus').textContent=txt;}});
+$('copy').addEventListener('click',async()=>{const txt=`SUN HOMESTAY\nCơ sở: ${$('site').selectedOptions[0].text}\n${$('roomTitle').textContent}\nCheck-in: ${$('checkin').value.replace('T',' ')}\nCheck-out: ${$('checkout').value.replace('T',' ')}\nLoại thuê: ${$('kind').textContent}\nTổng thanh toán: ${$('total').textContent}\nTên khách hàng: ${$('customerName').value.trim()}\nSố lượng người ở: ${$('guestCount').value || '—'}\nNội dung chuyển khoản: ${[(($('customerName')?.value||'').trim()),'chuyển tiền'].filter(Boolean).join(' ')}`;try{await navigator.clipboard.writeText(txt);$('copystatus').textContent='Đã sao chép thông tin.';}catch(e){$('copystatus').textContent=txt;}});
 const now=new Date();const localVal=d=>{const pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;};
 $('checkin').value=localVal(now);const later=new Date(now.getTime()+24*3600000);later.setHours(13,0,0,0);$('checkout').value=localVal(later);refreshRooms();
 </script></body></html>
