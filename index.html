@@ -10,6 +10,15 @@
 #app{background-color:var(--bg);min-height:100vh;width:100%;padding:28px 18px 48px}
 .wrap{max-width:1080px;margin:0 auto}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{height:46px;width:46px;border-radius:14px;background:linear-gradient(135deg,#f5c15d,#a96d12);display:grid;place-items:center;color:#201708;font-weight:900;font-size:20px;box-shadow:0 5px 16px #b779132b}.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:800}.brand h1{font-size:24px;margin:0;letter-spacing:-.03em}.sub{color:var(--muted);margin:2px 0 0;font-size:13px}
 .layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:18px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 8px 28px #00000008}.panel h2{font-size:17px;margin:0 0 4px;letter-spacing:-.02em}.hint{font-size:12px;color:var(--muted);margin:0 0 20px}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}.field label{font-size:12px;font-weight:750;color:var(--muted)}input,select{width:100%;border:1px solid var(--line);background:var(--input);color:var(--text);border-radius:11px;padding:12px 12px;font:inherit;outline:none;min-height:46px}input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px #d99d2920}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.btn{border:0;border-radius:12px;background:linear-gradient(135deg,#e8b54e,#c88719);color:#201708;font-weight:850;padding:13px 16px;cursor:pointer;font:inherit;font-weight:800;width:100%;min-height:48px}.btn.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}.btnrow{display:flex;gap:10px;margin-top:8px}.result{background:linear-gradient(145deg,light-dark(#fff9eb,#2a2419),var(--surface));border:1px solid light-dark(#f0d69e,#6b542e);border-radius:18px;padding:20px;margin:18px 0}.resultTop{display:flex;justify-content:space-between;gap:10px;align-items:center}.pill{font-size:11px;font-weight:800;background:light-dark(#e7f5ec,#1c4432);color:var(--green);padding:5px 9px;border-radius:99px}.amount{font-size:clamp(27px,4vw,38px);font-weight:900;letter-spacing:-.04em;margin:7px 0;color:var(--gold)}.muted{color:var(--muted)}.breakdown{border-top:1px solid var(--line);margin-top:14px;padding-top:12px;display:grid;gap:9px}.line{display:flex;justify-content:space-between;gap:14px;font-size:13px}.line strong{font-variant-numeric:tabular-nums;text-align:right}.line.total{font-size:15px;font-weight:850;padding-top:9px;border-top:1px dashed var(--line)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}.stat{background:var(--input);border:1px solid var(--line);padding:11px;border-radius:12px}.stat b{display:block;font-size:17px}.stat span{font-size:11px;color:var(--muted)}.section{margin-top:22px}.section h3{font-size:14px;margin:0 0 10px}.rates{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.rate{border:1px solid var(--line);border-radius:12px;padding:12px}.rate b{display:block;font-size:12px}.rate strong{display:block;color:var(--gold);font-size:16px;margin:3px 0}.rate small{color:var(--muted);font-size:11px}.note{font-size:11px;color:var(--muted);margin-top:14px}.status{font-size:12px;color:var(--green);min-height:18px;margin-top:8px}.hidden{display:none}
+
+.payment-section{padding:14px;background:#fffdf8;border:1px solid #ead9b3;border-radius:16px;color:#17212b}
+.qr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.qr-card{border:1px solid #e1e5e9;border-radius:14px;padding:12px;text-align:center;background:#fff;min-width:0}
+.qr-card h4{font-size:15px;margin:0 0 5px;color:#17212b}.qr-amount{font-weight:900;font-size:19px;color:#9b6811;margin-bottom:8px;overflow-wrap:anywhere}
+.qr-card img{display:block;width:100%;max-width:250px;aspect-ratio:1/1;object-fit:contain;margin:0 auto 8px;background:#fff}
+.qr-card p{font-size:11px;color:#586575;margin:4px 0;overflow-wrap:anywhere}.qr-card a{font-size:12px;color:#1458a6;font-weight:700}
+@media(max-width:400px){.qr-grid{grid-template-columns:1fr}.qr-card img{max-width:230px}}
+
 /* Tablet and mobile layout */
 @media(max-width:760px){
   #app{padding:16px 10px 28px}
@@ -95,6 +104,13 @@
 <div class="line total"><span>THÀNH TIỀN</span><strong id="total">—</strong></div></div>
 <div class="stats"><div class="stat"><b id="hours">—</b><span>Giờ thực tế</span></div><div class="stat"><b id="nights">—</b><span>Ngày chênh lệch</span></div><div class="stat"><b id="perday">—</b><span>Giá ngày đêm</span></div></div>
 <div class="section"><h3>Bảng giá cơ sở đang chọn</h3><div class="rates" id="rates"></div></div>
+<div class="section payment-section" id="paymentSection">
+<h3>QR chuyển khoản ngân hàng MB</h3>
+<p class="note">Quét mã để chuyển khoản đúng số tiền. Mã QR tự cập nhật sau khi tính tiền; cần có kết nối Internet để tải mã.</p>
+<div class="qr-grid">
+ <article class="qr-card"><h4>Thanh toán 50%</h4><div class="qr-amount" id="halfAmount">—</div><img id="qrHalf" alt="Mã QR thanh toán 50%" loading="lazy"><p>Ngân hàng MB · STK 5919998888</p><a id="qrHalfLink" target="_blank" rel="noopener">Mở mã QR</a></article>
+ <article class="qr-card"><h4>Thanh toán 100%</h4><div class="qr-amount" id="fullAmount">—</div><img id="qrFull" alt="Mã QR thanh toán toàn bộ" loading="lazy"><p>Ngân hàng MB · STK 5919998888</p><a id="qrFullLink" target="_blank" rel="noopener">Mở mã QR</a></article>
+</div></div>
 <div class="btnrow"><button class="btn secondary" id="copy">Sao chép thông tin thanh toán</button><button class="btn" id="downloadReceipt">Tải ảnh gửi khách</button></div><div class="status" id="copystatus" aria-live="polite"></div><p class="note">Bấm “Tải ảnh gửi khách” để tạo phiếu thanh toán PNG gọn gàng, chỉ hiển thị thông tin cần gửi khách.</p>
 </section></div>
 </div></main>
@@ -114,7 +130,16 @@ const money=n=>Math.round(n).toLocaleString('vi-VN')+' ₫';
 function refreshRooms(){const site=$('site').value;const map=roomMap[site];$('room').innerHTML=Object.keys(map).sort((a,b)=>+a- +b).map(r=>`<option value="${r}">Phòng ${r}</option>`).join('');updateType();renderRates();calculate();}
 function updateType(){$('type').value=roomMap[$('site').value][$('room').value]||'';$('roomTitle').textContent='Phòng '+$('room').value+' · '+$('type').value;}
 function renderRates(){const site=$('site').value;const r=rates[site];const available=[...new Set(Object.values(roomMap[site]))];$('rates').innerHTML=available.filter(name=>r[name]).map(name=>{const v=r[name];return `<div class="rate"><b>${name.replace('PHÒNG ','Phòng ')}</b><strong>2H ${money(v.h2)}</strong><small>3H ${money(v.h3)}<br>Qua đêm ${money(v.night)}<br>Ngày đêm ${money(v.day)}<br>Thêm 1H ${money(v.extra)} · Báo trước 1H ${money(v.over)}</small></div>`}).join('');}
-function blank(){['grand','duration','kind','base','extra','saved','adjust','total','hours','nights','perday'].forEach(id=>$(id).textContent='—');$('kindPill').textContent='Chờ nhập giờ';}
+function blank(){['grand','duration','kind','base','extra','saved','adjust','total','hours','nights','perday'].forEach(id=>$(id).textContent='—');$('kindPill').textContent='Chờ nhập giờ';setPaymentQRs(NaN);}
+function setPaymentQRs(total){
+ const valid=Number.isFinite(total)&&total>=0;
+ const half=valid?Math.round(total/2):0, full=valid?Math.round(total):0;
+ $('halfAmount').textContent=valid?money(half):'—';$('fullAmount').textContent=valid?money(full):'—';
+ const room=$('room').value||'';
+ const makeUrl=(amount,tag)=>'https://img.vietqr.io/image/MB-5919998888-compact2.png?amount='+encodeURIComponent(amount)+'&addInfo='+encodeURIComponent('SUN HOMESTAY PHONG '+room+' '+tag)+'&accountName='+encodeURIComponent('HO KINH DOANH SUNHOMESTAY');
+ if(valid){const u1=makeUrl(half,'THANH TOAN 50 PCT'),u2=makeUrl(full,'THANH TOAN 100 PCT');$('qrHalf').src=u1;$('qrHalfLink').href=u1;$('qrFull').src=u2;$('qrFullLink').href=u2;}
+ else {$('qrHalf').removeAttribute('src');$('qrFull').removeAttribute('src');$('qrHalfLink').removeAttribute('href');$('qrFullLink').removeAttribute('href');}
+}
 function calculate(){
  updateType();const ci=$('checkin').value,co=$('checkout').value;if(!ci||!co){blank();$('duration').textContent='Nhập thời gian check-in và check-out.';return;}
  const start=new Date(ci),end=new Date(co),hours=(end-start)/36e5;if(!Number.isFinite(hours)||hours<=0){blank();$('duration').textContent='Giờ check-out phải sau check-in.';$('status').textContent='Vui lòng kiểm tra lại thời gian.';return;}
@@ -144,10 +169,12 @@ function calculate(){
    if(extra>=price.night)discount+=extra*rateForDate(end)/100;
    $('discount').value=[...new Set(dailyRates)].map(p=>p+'%').join(' + ')+(extra>=price.night?' + giờ thêm':'');
  }else{$('discount').value='Không áp dụng';discount=0;}
+ // Làm tròn tiền ưu đãi xuống bội số 1.000đ (ví dụ 70.500đ thành 70.000đ).
+ discount=Math.floor(discount/1000)*1000;
  const adj=Number($('manual').value)||0;const total=Math.max(0,base+extra-discount+adj);
  $('kindPill').textContent=kind;$('grand').textContent=money(total);$('duration').textContent=`${start.toLocaleString('vi-VN',{dateStyle:'medium',timeStyle:'short'})} → ${end.toLocaleString('vi-VN',{dateStyle:'medium',timeStyle:'short'})}`;
  $('kind').textContent=kind;$('base').textContent=money(base);$('extra').textContent=money(extra);$('saved').textContent='− '+money(discount);$('adjust').textContent=(adj>0?'+ ':adj<0?'− ':'')+money(Math.abs(adj));$('total').textContent=money(total);$('hours').textContent=hours.toLocaleString('vi-VN',{maximumFractionDigits:2});$('nights').textContent=days;$('perday').textContent=money(price.day);
- $('status').textContent='Đã cập nhật phép tính.';
+ setPaymentQRs(total);$('status').textContent='Đã cập nhật phép tính.';
 }
 $('site').addEventListener('change',refreshRooms);$('room').addEventListener('change',()=>{updateType();calculate()});['checkin','checkout','discount','manual'].forEach(id=>$(id).addEventListener('input',calculate));$('calc').addEventListener('click',calculate);
 $('reset').addEventListener('click',()=>{$('checkin').value='';$('checkout').value='';$('discount').value='Tự động theo ngày';$('manual').value='0';$('status').textContent='Đã làm mới thông tin thời gian.';blank();});
