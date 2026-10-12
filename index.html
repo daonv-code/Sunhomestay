@@ -10,8 +10,65 @@
 #app{background-color:var(--bg);min-height:100vh;width:100%;padding:28px 18px 48px}
 .wrap{max-width:1080px;margin:0 auto}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{height:46px;width:46px;border-radius:14px;background:linear-gradient(135deg,#f5c15d,#a96d12);display:grid;place-items:center;color:#201708;font-weight:900;font-size:20px;box-shadow:0 5px 16px #b779132b}.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:800}.brand h1{font-size:24px;margin:0;letter-spacing:-.03em}.sub{color:var(--muted);margin:2px 0 0;font-size:13px}
 .layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:18px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 8px 28px #00000008}.panel h2{font-size:17px;margin:0 0 4px;letter-spacing:-.02em}.hint{font-size:12px;color:var(--muted);margin:0 0 20px}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}.field label{font-size:12px;font-weight:750;color:var(--muted)}input,select{width:100%;border:1px solid var(--line);background:var(--input);color:var(--text);border-radius:11px;padding:12px 12px;font:inherit;outline:none;min-height:46px}input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px #d99d2920}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.btn{border:0;border-radius:12px;background:linear-gradient(135deg,#e8b54e,#c88719);color:#201708;font-weight:850;padding:13px 16px;cursor:pointer;font:inherit;font-weight:800;width:100%;min-height:48px}.btn.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}.btnrow{display:flex;gap:10px;margin-top:8px}.result{background:linear-gradient(145deg,light-dark(#fff9eb,#2a2419),var(--surface));border:1px solid light-dark(#f0d69e,#6b542e);border-radius:18px;padding:20px;margin:18px 0}.resultTop{display:flex;justify-content:space-between;gap:10px;align-items:center}.pill{font-size:11px;font-weight:800;background:light-dark(#e7f5ec,#1c4432);color:var(--green);padding:5px 9px;border-radius:99px}.amount{font-size:clamp(27px,4vw,38px);font-weight:900;letter-spacing:-.04em;margin:7px 0;color:var(--gold)}.muted{color:var(--muted)}.breakdown{border-top:1px solid var(--line);margin-top:14px;padding-top:12px;display:grid;gap:9px}.line{display:flex;justify-content:space-between;gap:14px;font-size:13px}.line strong{font-variant-numeric:tabular-nums;text-align:right}.line.total{font-size:15px;font-weight:850;padding-top:9px;border-top:1px dashed var(--line)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}.stat{background:var(--input);border:1px solid var(--line);padding:11px;border-radius:12px}.stat b{display:block;font-size:17px}.stat span{font-size:11px;color:var(--muted)}.section{margin-top:22px}.section h3{font-size:14px;margin:0 0 10px}.rates{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.rate{border:1px solid var(--line);border-radius:12px;padding:12px}.rate b{display:block;font-size:12px}.rate strong{display:block;color:var(--gold);font-size:16px;margin:3px 0}.rate small{color:var(--muted);font-size:11px}.note{font-size:11px;color:var(--muted);margin-top:14px}.status{font-size:12px;color:var(--green);min-height:18px;margin-top:8px}.hidden{display:none}
-@media(max-width:760px){#app{padding:20px 12px 32px}.layout{grid-template-columns:1fr}.panel{padding:18px}.brand h1{font-size:21px}.three{grid-template-columns:1fr 1fr}.rates{grid-template-columns:1fr 1fr}}
-@media(max-width:400px){.two{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.rates{grid-template-columns:1fr}}
+/* Tablet and mobile layout */
+@media(max-width:760px){
+  #app{padding:16px 10px 28px}
+  .wrap{width:100%;max-width:560px}
+  .layout{grid-template-columns:minmax(0,1fr);gap:14px}
+  .panel{padding:16px;border-radius:16px;min-width:0}
+  .brand{gap:10px;margin-bottom:16px;align-items:flex-start}
+  .logo{height:40px;width:40px;min-width:40px;border-radius:12px;font-size:18px}
+  .brand h1{font-size:20px;line-height:1.25}
+  .eyebrow{font-size:10px;letter-spacing:.12em}
+  .sub{font-size:12px;line-height:1.4}
+  .hint{margin-bottom:16px}
+  .field{margin-bottom:13px;min-width:0}
+  .field label{font-size:12px;line-height:1.35}
+  input,select{min-height:48px;padding:11px 10px;font-size:16px;border-radius:10px;max-width:100%}
+  input[type="datetime-local"]{font-size:15px;min-width:0}
+  .two{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .three{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .btnrow{gap:8px;flex-wrap:wrap}
+  .btnrow .btn{flex:1 1 145px;min-width:0;min-height:48px;padding:12px 10px;font-size:14px}
+  .result{padding:15px;margin:14px 0;border-radius:14px}
+  .resultTop{align-items:flex-start;flex-wrap:wrap}
+  .resultTop h2{font-size:16px;overflow-wrap:anywhere}
+  .pill{white-space:normal;text-align:center;max-width:45%}
+  .amount{font-size:clamp(30px,8vw,38px);line-height:1.15;overflow-wrap:anywhere}
+  .muted{font-size:12px;overflow-wrap:anywhere}
+  .breakdown{gap:10px}
+  .line{font-size:13px;gap:10px;align-items:flex-start}
+  .line span{min-width:0;flex:1}
+  .line strong{max-width:55%;overflow-wrap:anywhere}
+  .line.total{font-size:15px}
+  .stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:12px}
+  .stat{padding:9px 7px;min-width:0}
+  .stat b{font-size:15px;overflow-wrap:anywhere}
+  .stat span{font-size:10px;line-height:1.25;display:block}
+  .section{margin-top:18px}
+  .rates{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+  .rate{padding:10px;min-width:0}
+  .rate b{font-size:11px}
+  .rate strong{font-size:15px}
+  .rate small{font-size:10px;line-height:1.45;display:block;overflow-wrap:anywhere}
+  .note{font-size:11px;line-height:1.5}
+  .status{overflow-wrap:anywhere}
+}
+@media(max-width:420px){
+  #app{padding:12px 8px 22px}
+  .panel{padding:13px}
+  .brand h1{font-size:18px}
+  .logo{height:36px;width:36px;min-width:36px;font-size:16px}
+  .two{grid-template-columns:minmax(0,1fr)}
+  .stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .rates{grid-template-columns:minmax(0,1fr)}
+  .btnrow{flex-direction:column}
+  .btnrow .btn{flex:1 1 auto;width:100%}
+  .resultTop{display:block}
+  .pill{display:inline-block;margin-top:8px;max-width:100%}
+  input[type="datetime-local"]{font-size:14px;padding:10px 7px}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
 </style>
 </head>
 <body><main id="app"><div class="wrap">
