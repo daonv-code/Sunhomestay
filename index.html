@@ -31,6 +31,15 @@
 .extension-panel .btnrow{margin-top:4px}
 .extension-panel .btn{min-height:50px;box-shadow:0 4px 12px #b7791317}
 .extension-panel .status{margin-top:10px}
+.extension-top-fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.extension-results .field{margin-bottom:12px}
+.extension-pricing{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:2px 0 16px}
+.extension-price{padding:12px;border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.extension-price b{font-size:12px}.extension-price span{font-size:12px;color:var(--muted)}
+.extension-price.hourly{background:light-dark(#f0faf4,#192b22);border-color:light-dark(#b7e4c9,#2f6147)}
+.extension-price.night{background:light-dark(#fff8e8,#302719);border-color:light-dark(#f1d18a,#6d5224)}
+.extension-price.day{background:light-dark(#f1f6ff,#1d293b);border-color:light-dark(#c8d9fb,#354e75)}
+@media(max-width:520px){.extension-pricing{grid-template-columns:1fr}.extension-top-fields{gap:10px}.extension-panel .field label{font-size:11px}}
 @media(max-width:420px){.extension-site-room{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.extension-site-room select,.extension-site-room input{font-size:13px;padding:10px 7px}.extension-panel .hint{font-size:12px}}
 
 /* Tablet and mobile layout */
@@ -92,6 +101,41 @@
   input[type="datetime-local"]{font-size:14px;padding:10px 7px}
 }
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+/* Gia hạn thêm giờ: giao diện thẻ cân đối theo mẫu */
+.extension-panel{background:linear-gradient(180deg,light-dark(#ffffff,#1b222b),light-dark(#fbfdff,#1b222b));border:1px solid light-dark(#d7e5f7,#35485f);border-radius:20px;padding:26px 28px;box-shadow:0 10px 30px #1e5b9810;margin-top:20px;border-top:1px solid light-dark(#d7e5f7,#35485f)}
+.extension-panel h2{font-size:clamp(20px,2.5vw,28px);color:light-dark(#123568,#d8e7ff);gap:12px;margin-bottom:5px}
+.extension-panel h2:before{content:"◷";width:48px;height:48px;min-width:48px;border-radius:50%;font-size:29px;background:linear-gradient(135deg,#8db7ff,#4f86e8);color:#fff}
+.extension-panel .hint{font-size:14px;max-width:none;margin:0 0 24px 60px;color:var(--muted)}
+.extension-panel .field{gap:8px;margin-bottom:16px}
+.extension-panel .field label{font-size:12px;color:light-dark(#244574,#b9cce8);letter-spacing:.01em}
+.extension-panel input,.extension-panel select{border-radius:12px;min-height:54px;padding:13px 15px;border-color:light-dark(#d0dff2,#3a4b62);background:light-dark(#fff,#151b22)}
+.extension-panel input[readonly]{background:light-dark(#f7faff,#202b39);border-color:light-dark(#d5e4f8,#3a4b62)}
+.extension-results{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:6px;margin-bottom:18px}
+.extension-results .field{position:relative;min-height:106px;padding:14px 18px 12px 54px;border-radius:10px;border:1px solid light-dark(#c5ddff,#2d4f7d);background:linear-gradient(110deg,light-dark(#eff6ff,#1b2b40),light-dark(#f8fbff,#1b222b));display:flex;flex-direction:column;justify-content:center;gap:2px;margin:0}
+.extension-results .field.fee-card{border-color:light-dark(#b8ead9,#28694f);background:linear-gradient(110deg,light-dark(#effbf7,#18372e),light-dark(#f8fffc,#1b222b))}
+.extension-results .field .result-icon{position:absolute;left:16px;top:15px;width:25px;height:25px;display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1;font-weight:700;color:light-dark(#1670e8,#8fc0ff)}
+.extension-results .field.fee-card .result-icon{color:light-dark(#07956f,#75e0b7)}
+.extension-results .field label{font-size:14px!important;font-weight:750;color:light-dark(#174a91,#b9d5ff)!important;text-transform:none;letter-spacing:0}
+.extension-results .field.fee-card label{color:light-dark(#087c61,#a7ead5)!important}
+.extension-results .field input{font-size:27px;font-weight:850;color:light-dark(#1262c8,#8fc0ff);border:0;background:transparent;padding:0;min-height:34px;height:auto;line-height:1.15;box-shadow:none}
+.extension-results .field.fee-card input{color:light-dark(#07815f,#75e0b7)}
+.extension-results .result-detail{font-size:12px;color:light-dark(#4c6482,#a8bbd2);line-height:1.35;margin-top:1px}
+.extension-results .fee-card .result-detail{color:light-dark(#245b4d,#b8f2df);font-size:14px;font-weight:700;line-height:1.6;white-space:pre-line;overflow-wrap:anywhere;margin-top:6px}
+.extension-results .fee-card{padding-bottom:16px}
+.extension-results .fee-card input{font-size:26px!important;font-weight:900;letter-spacing:.2px}
+
+.extension-pricing{gap:14px;margin:8px 0 20px;padding:0}
+.extension-price{min-height:120px;padding:18px;border-radius:14px;justify-content:center;gap:7px}
+.extension-price b{font-size:15px}.extension-price span{font-size:13px;line-height:1.5}
+.extension-price.hourly:before{content:"✓";font-size:20px;font-weight:900;color:light-dark(#07815f,#75e0b7)}
+.extension-price.night:before{content:"☾";font-size:24px;color:light-dark(#c58a08,#ffd36b)}
+.extension-price.day:before{content:"☀";font-size:24px;color:light-dark(#dc4545,#ff9292)}
+.extension-panel .btnrow{margin-top:4px}
+.extension-panel #downloadExtension{min-height:58px;font-size:16px;background:linear-gradient(100deg,#f1bd45,#d79513);box-shadow:0 5px 15px #c8871928}
+.extension-panel .status{font-size:13px}
+@media(max-width:600px){.extension-panel{padding:18px 14px}.extension-panel .hint{margin-left:0}.extension-panel h2:before{width:40px;height:40px;min-width:40px}.extension-results .field{padding:12px}.extension-results .field input{font-size:17px}.extension-pricing{grid-template-columns:1fr}.extension-price{min-height:unset}}
+
 </style>
 </head>
 <body><main id="app"><div class="wrap">
@@ -131,11 +175,12 @@
 <div class="btnrow"><button class="btn secondary" id="copy">Sao chép thông tin thanh toán</button><button class="btn" id="downloadReceipt">Tải ảnh gửi khách</button></div><div class="status" id="copystatus" aria-live="polite"></div><p class="note">Bấm “Tải ảnh gửi khách” để tạo phiếu thanh toán PNG gọn gàng, chỉ hiển thị thông tin cần gửi khách.</p>
 </section></div>
 <section class="panel extension-panel">
-<h2>Gia hạn thêm giờ</h2><p class="hint">Nhập giờ check-in ban đầu và giờ check-out sau khi gia hạn. Số giờ tính theo chênh lệch thời gian × 80.000đ/giờ. Phiếu gia hạn riêng, không cộng vào bảng thanh toán phòng.</p>
-<div class="field"><label for="extCustomer">TÊN KHÁCH HÀNG</label><input id="extCustomer" type="text" placeholder="Nhập tên khách hàng"></div>
-<div class="extension-site-room"><div class="field"><label for="extSite">CƠ SỞ</label><select id="extSite"><option value="ndh">NĐH – Cầu Giấy · Số 60, ngõ 144 Nguyễn Đình Hoàn</option><option value="llq">LLQ – Tây Hồ · Số 16, hẻm 51/2, ngõ 89 Lạc Long Quân</option><option value="dc">Đội Cấn – Ba Đình · Số 10, ngách 222F, ngõ 260 Đội Cấn</option></select></div><div class="field"><label for="extRoom">MÃ PHÒNG</label><input id="extRoom" type="text" placeholder="Ví dụ: 101"></div></div>
-<div class="two"><div class="field"><label for="extCheckin">GIỜ CHECK-IN</label><input id="extCheckin" type="datetime-local"></div><div class="field"><label for="extCheckout">GIỜ CHECK-OUT</label><input id="extCheckout" type="datetime-local"></div></div>
-<div class="two"><div class="field"><label for="extensionHours">SỐ GIỜ GIA HẠN</label><input id="extensionHours" type="text" readonly value="—"></div><div class="field"><label for="extensionFeeDisplay">PHÍ GIA HẠN (80.000đ/GIỜ)</label><input id="extensionFeeDisplay" type="text" readonly value="—"></div></div>
+<h2>Gia hạn thêm giờ</h2><p class="hint">Nhập giờ check-in ban đầu và giờ check-out sau khi gia hạn. Dưới 6 giờ: số giờ × 80.000đ; từ 6 đến 12 giờ: giá qua đêm; trên 12 giờ: mỗi 24 giờ tính 1 ngày theo giá ngày đêm, số giờ dư tính thêm 30.000đ/giờ (cơ sở ĐC: 50.000đ/giờ). Phiếu gia hạn riêng, không cộng vào bảng thanh toán phòng.</p>
+<div class="two extension-top-fields"><div class="field"><label for="extCustomer">TÊN KHÁCH HÀNG</label><input id="extCustomer" type="text" placeholder="Nhập tên khách hàng"></div><div class="field"><label for="extSite">CƠ SỞ</label><select id="extSite"><option value="ndh">NĐH – Cầu Giấy</option><option value="llq">LLQ – Tây Hồ</option><option value="dc">Đội Cấn – Ba Đình</option></select></div></div>
+<div class="two extension-top-fields"><div class="field"><label for="extRoom">MÃ PHÒNG</label><select id="extRoom"></select></div><div class="field"><label for="extRoomType">HẠNG PHÒNG</label><input id="extRoomType" type="text" readonly placeholder="Tự động theo phòng"></div></div>
+<div class="two"><div class="field"><label for="extCheckin">GIỜ CHECK-IN (BAN ĐẦU)</label><input id="extCheckin" type="datetime-local"></div><div class="field"><label for="extCheckout">GIỜ CHECK-OUT (SAU GIA HẠN)</label><input id="extCheckout" type="datetime-local"></div></div>
+<div class="two extension-results"><div class="field hours-card"><div class="result-icon" aria-hidden="true">◷</div><label for="extensionHours">Số giờ gia hạn</label><input id="extensionHours" type="text" readonly value="—"><span class="result-detail" id="extensionTimeDetail">Thời gian: —</span></div><div class="field fee-card"><div class="result-icon" aria-hidden="true">＄</div><label for="extensionFeeDisplay">Phí gia hạn</label><input id="extensionFeeDisplay" type="text" readonly value="—"><span class="result-detail" id="extensionFeeDetail">Theo mức giá áp dụng</span></div></div>
+<div class="extension-pricing" aria-label="Quy tắc giá gia hạn"><div class="extension-price hourly"><b>Dưới 6 giờ</b><span>80.000đ/giờ</span></div><div class="extension-price night"><b>6–12 giờ</b><span>Tính giá qua đêm theo hạng phòng</span></div><div class="extension-price day"><b>Trên 12 giờ</b><span>Mỗi 24 giờ × giá ngày đêm + giờ dư × 30.000đ (cơ sở ĐC: 50.000đ/giờ)</span></div></div>
 <div class="btnrow"><button class="btn" id="downloadExtension">Tải phiếu gia hạn gửi khách</button></div><div class="status" id="extensionStatus" aria-live="polite"></div>
 </section>
 </div></main>
@@ -228,8 +273,7 @@ function downloadReceipt(){
   ['Thời gian nhận phòng',$('checkin').value.replace('T','  ')],
   ['Thời gian trả phòng',$('checkout').value.replace('T','  ')],
   ['Hình thức thuê',$('kind').textContent],
-  ['Tiền phòng',$('base').textContent],
-  ['Tiền giờ thêm / phụ trội',$('extra').textContent],
+  ['Đơn giá chính',$('base').textContent],
     ['Ưu đãi',$('saved').textContent.replace(/^[−-]\s*/, '')],
   ['Phụ thu / giảm trừ',$('adjust').textContent]
  ];
@@ -260,26 +304,77 @@ $('downloadReceipt').addEventListener('click',downloadReceipt);
 
 $('copy').addEventListener('click',async()=>{const txt=`SUN HOMESTAY\nCơ sở: ${$('site').selectedOptions[0].text}\n${$('roomTitle').textContent}\nCheck-in: ${$('checkin').value.replace('T',' ')}\nCheck-out: ${$('checkout').value.replace('T',' ')}\nLoại thuê: ${$('kind').textContent}\nTổng thanh toán: ${$('total').textContent}\nTên khách hàng: ${$('customerName').value.trim()}\nSố lượng người ở: ${$('guestCount').value || '—'}\nNội dung chuyển khoản: ${[(($('customerName')?.value||'').trim()),'chuyển tiền'].filter(Boolean).join(' ')}`;try{await navigator.clipboard.writeText(txt);$('copystatus').textContent='Đã sao chép thông tin.';}catch(e){$('copystatus').textContent=txt;}});
 const now=new Date();const localVal=d=>{const pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;};
+function refreshExtensionRooms(){
+ const site=$('extSite').value, map=roomMap[site]||{};const previous=$('extRoom').value;
+ $('extRoom').innerHTML=Object.keys(map).sort((a,b)=>+a- +b).map(r=>`<option value="${r}">Phòng ${r}</option>`).join('');
+ if(map[previous])$('extRoom').value=previous;
+ updateExtensionRoomType();updateExtension();
+}
+function updateExtensionRoomType(){const site=$('extSite').value,room=$('extRoom').value; $('extRoomType').value=(roomMap[site]||{})[room]||'—';}
 function updateExtension(){
  const ci=$('extCheckin').value, co=$('extCheckout').value;
- if(!ci||!co){$('extensionHours').value='—';$('extensionFeeDisplay').value='—';return null;}
- const start=new Date(ci),end=new Date(co),mins=(end-start)/60000;
- if(!Number.isFinite(mins)||mins<=0){$('extensionHours').value='Thời gian không hợp lệ';$('extensionFeeDisplay').value='—';return null;}
- const hours=mins/60,fee=Math.round(hours*80000);
- $('extensionHours').value=(Math.round(hours*100)/100).toLocaleString('vi-VN')+' giờ';
- $('extensionFeeDisplay').value=fee.toLocaleString('vi-VN')+' ₫';return {start,end,hours,fee};
+ const hoursEl=$('extensionHours'), feeEl=$('extensionFeeDisplay');
+ if(!ci||!co){hoursEl.value='—';feeEl.value='—';$('extensionTimeDetail').textContent='Thời gian: —';$('extensionFeeDetail').textContent='Theo mức giá áp dụng';$('extensionStatus').textContent='';return null;}
+ const start=new Date(ci), end=new Date(co), mins=(end.getTime()-start.getTime())/60000;
+ if(!Number.isFinite(mins)||mins<=0){hoursEl.value='Thời gian không hợp lệ';feeEl.value='—';$('extensionTimeDetail').textContent='Vui lòng kiểm tra lại thời gian';$('extensionFeeDetail').textContent='Chưa thể tính phí';return null;}
+ const hours=mins/60, site=$('extSite').value, room=$('extRoom').value;
+ const roomType=(roomMap[site]||{})[room], roomRate=(rates[site]||{})[roomType];
+ let fee=0, pricingType, dayCount=0, dayRate=roomRate?roomRate.day:0, extraHours=0, extraType='', extraFee=0;
+ const extraRate=site==='dc'?50000:30000;
+ if(hours<6){
+   fee=Math.round(hours*80000); pricingType='Số giờ × 80.000đ/giờ';
+ } else if(hours<12){
+   fee=roomRate ? roomRate.night : 0; pricingType='Giá qua đêm';
+ } else {
+   // Một ngày gia hạn = 24 giờ. Phần giờ dư được tính theo quy tắc riêng:
+   // dưới 6 giờ: đơn giá theo cơ sở; 6-12 giờ: giá qua đêm; trên 12 giờ: giá ngày đêm.
+   dayCount=Math.floor(hours/24);
+   extraHours=Math.max(0,hours-dayCount*24);
+   const base=dayCount*dayRate;
+   if(extraHours>0 && extraHours<6){
+     extraFee=Math.round(extraHours*extraRate); extraType=`${extraHours.toLocaleString('vi-VN',{maximumFractionDigits:2})} giờ dư × ${money(extraRate)}`;
+   } else if(extraHours>=6 && extraHours<=12){
+     extraFee=roomRate?roomRate.night:0; extraType='giờ dư 6–12 tiếng: giá qua đêm';
+   } else if(extraHours>12){
+     extraFee=dayRate; extraType='giờ dư trên 12 tiếng: tính thêm 1 giá ngày đêm'; dayCount+=1;
+   }
+   fee=base+extraFee;
+   pricingType=`${dayCount-(extraHours>12?1:0)} ngày đủ (24 giờ/ngày) × giá ngày đêm`+(extraHours>0?` + ${extraType}`:'');
+ }
+ hoursEl.value=(Math.round(hours*100)/100).toLocaleString('vi-VN')+' giờ';
+ feeEl.value=fee>0 ? money(fee) : 'Chưa có giá';
+ const fmtTime=d=>d.toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit',hour12:false});
+ const sameDay=start.toDateString()===end.toDateString();
+ $('extensionTimeDetail').textContent='Thời gian: '+fmtTime(start)+' → '+fmtTime(end)+(sameDay?' (cùng ngày)':'');
+ if(hours<6) {
+   $('extensionFeeDetail').textContent=(Math.round(hours*100)/100).toLocaleString('vi-VN')+' giờ × 80.000đ/giờ\n= '+money(fee);
+ } else if(hours<12) {
+   $('extensionFeeDetail').textContent='Giá qua đêm: '+money(fee);
+ } else {
+   const fullDays=Math.floor(hours/24);
+   const lines=[];
+   if(fullDays>0) lines.push(fullDays+' ngày × '+money(dayRate)+' = '+money(fullDays*dayRate));
+   if(extraHours>0 && extraHours<6) lines.push(extraHours.toLocaleString('vi-VN',{maximumFractionDigits:2})+' giờ dư × '+money(extraRate)+' = '+money(extraFee));
+   else if(extraHours>=6 && extraHours<=12) lines.push('Giờ dư tính giá qua đêm: '+money(extraFee));
+   else if(extraHours>12) lines.push('Giờ dư trên 12 giờ: tính thêm giá ngày đêm '+money(dayRate));
+   lines.push('TỔNG CỘNG: '+money(fee));
+   $('extensionFeeDetail').textContent=lines.join('\n');
+ }
+ return {start,end,hours,fee,pricingType,roomType,dayCount,dayRate,extraHours,extraFee,extraType};
 }
-['extCheckin','extCheckout'].forEach(id=>$(id).addEventListener('input',updateExtension));
+$('extSite').addEventListener('change',refreshExtensionRooms);
+$('extRoom').addEventListener('change',()=>{updateExtensionRoomType();updateExtension();});
+['extCheckin','extCheckout'].forEach(id=>{ $(id).addEventListener('input',updateExtension); $(id).addEventListener('change',updateExtension); });
 $('downloadExtension').addEventListener('click',()=>{
  const data=updateExtension(); if(!data){$('extensionStatus').textContent='Vui lòng nhập giờ check-in và check-out hợp lệ.';return;}
  const fmt=d=>d.toLocaleString('vi-VN',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false});
- const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');canvas.width=1000;canvas.height=800;
- ctx.fillStyle='#f4f6f8';ctx.fillRect(0,0,1000,800);ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect(36,28,928,744,24);ctx.fill();ctx.fillStyle='#b77913';ctx.fillRect(36,28,928,12);
+ const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');canvas.width=1000;canvas.height=760;
+ ctx.fillStyle='#f4f6f8';ctx.fillRect(0,0,1000,760);ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect(36,28,928,650,24);ctx.fill();ctx.fillStyle='#b77913';ctx.fillRect(36,28,928,12);
  ctx.textAlign='center';ctx.fillStyle='#17212b';ctx.font='bold 42px Arial';ctx.fillText('SUN HOMESTAY',500,105);ctx.fillStyle='#687684';ctx.font='26px Arial';ctx.fillText('PHIẾU GIA HẠN THỜI GIAN LƯU TRÚ',500,150);
- const rows=[['Tên khách hàng',$('extCustomer').value.trim()||'—'],['Cơ sở',$('extSite').selectedOptions[0]?.text||'—'],['Mã phòng',$('extRoom').value.trim()||'—'],['Giờ check-in',fmt(data.start)],['Giờ check-out',fmt(data.end)],['Thời gian gia hạn',(Math.round(data.hours*100)/100).toLocaleString('vi-VN')+' giờ'],['Đơn giá','80.000 ₫/giờ']];let y=205;
+ const rows=[['Tên khách hàng',$('extCustomer').value.trim()||'—'],['Cơ sở',$('extSite').selectedOptions[0]?.text||'—'],['Mã phòng / Hạng phòng','Phòng '+$('extRoom').value+' · '+(data.roomType||'—')],['Giờ check-in',fmt(data.start)],['Giờ check-out',fmt(data.end)],['Thời gian gia hạn',(Math.round(data.hours*100)/100).toLocaleString('vi-VN')+' giờ']];let y=205;
  ctx.textAlign='left';rows.forEach((r,i)=>{if(i%2===0){ctx.fillStyle='#faf7ef';ctx.fillRect(72,y-30,856,58)}ctx.fillStyle='#687684';ctx.font='23px Arial';ctx.fillText(r[0],92,y+5);ctx.textAlign='right';ctx.fillStyle='#17212b';ctx.font='bold 23px Arial';ctx.fillText(r[1],908,y+5);ctx.textAlign='left';y+=60;});
- ctx.strokeStyle='#dce3e9';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(80, y+4);ctx.lineTo(920,y+4);ctx.stroke();ctx.fillStyle='#17212b';ctx.font='bold 27px Arial';ctx.fillText('PHÍ GIA HẠN',92,y+55);ctx.textAlign='right';ctx.fillStyle='#b77913';ctx.font='bold 40px Arial';ctx.fillText(data.fee.toLocaleString('vi-VN')+' ₫',908,y+58);ctx.textAlign='center';ctx.fillStyle='#687684';ctx.font='19px Arial';ctx.fillText('Cảm ơn quý khách đã lựa chọn Sun Homestay!',500,755);
+ ctx.strokeStyle='#dce3e9';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(80,y+4);ctx.lineTo(920,y+4);ctx.stroke();ctx.fillStyle='#17212b';ctx.font='bold 29px Arial';ctx.fillText('TỔNG PHÍ GIA HẠN',92,y+62);ctx.textAlign='right';ctx.fillStyle='#b77913';ctx.font='bold 43px Arial';ctx.fillText(data.fee.toLocaleString('vi-VN')+' ₫',908,y+63);ctx.textAlign='center';ctx.fillStyle='#687684';ctx.font='19px Arial';ctx.fillText('Cảm ơn quý khách đã lựa chọn Sun Homestay!',500,730);
  const a=document.createElement('a'),name=($('extCustomer').value||'').trim().replace(/[\\/:*?"<>|]/g,'-').replace(/\s+/g,' ').slice(0,80);a.download=(name?name+' - phieu gia han':'Sun-Homestay-phieu-gia-han')+'.png';a.href=canvas.toDataURL('image/png');a.click();$('extensionStatus').textContent='Đã tạo phiếu gia hạn PNG để gửi khách.';
 });
-$('extSite').value=$('site').value;$('checkin').value=localVal(now);const later=new Date(now.getTime()+24*3600000);later.setHours(13,0,0,0);$('checkout').value=localVal(later);$('extCheckin').value=$('checkin').value;$('extCheckout').value=$('checkout').value;refreshRooms();updateExtension();
+$('extSite').value=$('site').value;$('checkin').value=localVal(now);const later=new Date(now.getTime()+24*3600000);later.setHours(13,0,0,0);$('checkout').value=localVal(later);$('extCheckin').value=$('checkin').value;$('extCheckout').value=$('checkout').value;refreshRooms();refreshExtensionRooms();updateExtension();
 </script></body></html>
