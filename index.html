@@ -38,7 +38,7 @@
 <div class="line total"><span>THÀNH TIỀN</span><strong id="total">—</strong></div></div>
 <div class="stats"><div class="stat"><b id="hours">—</b><span>Giờ thực tế</span></div><div class="stat"><b id="nights">—</b><span>Ngày chênh lệch</span></div><div class="stat"><b id="perday">—</b><span>Giá ngày đêm</span></div></div>
 <div class="section"><h3>Bảng giá cơ sở đang chọn</h3><div class="rates" id="rates"></div></div>
-<div class="btnrow"><button class="btn secondary" id="copy">Sao chép thông tin thanh toán</button></div><div class="status" id="copystatus" aria-live="polite"></div>
+<div class="btnrow"><button class="btn secondary" id="copy">Sao chép thông tin thanh toán</button><button class="btn" id="downloadReceipt">Tải ảnh gửi khách</button></div><div class="status" id="copystatus" aria-live="polite"></div><p class="note">Bấm “Tải ảnh gửi khách” để tạo phiếu thanh toán PNG gọn gàng, chỉ hiển thị thông tin cần gửi khách.</p>
 </section></div>
 </div></main>
 <script>
@@ -94,6 +94,48 @@ function calculate(){
 }
 $('site').addEventListener('change',refreshRooms);$('room').addEventListener('change',()=>{updateType();calculate()});['checkin','checkout','discount','manual'].forEach(id=>$(id).addEventListener('input',calculate));$('calc').addEventListener('click',calculate);
 $('reset').addEventListener('click',()=>{$('checkin').value='';$('checkout').value='';$('discount').value='Tự động theo ngày';$('manual').value='0';$('status').textContent='Đã làm mới thông tin thời gian.';blank();});
+
+function downloadReceipt(){
+ if($('total').textContent==='—'||!$('checkin').value||!$('checkout').value){$('copystatus').textContent='Vui lòng nhập giờ và tính tiền trước khi tạo ảnh.';return;}
+ const canvas=document.createElement('canvas');const ctx=canvas.getContext('2d');
+ const W=1000, pad=76, rowH=58;
+ const siteText=$('site').selectedOptions[0].text.split(' · ')[0];
+ const branch=$('site').selectedOptions[0].text.split(' · ').slice(1).join(' · ');
+ const rows=[
+  ['Phòng',$('roomTitle').textContent],
+  ['Thời gian nhận phòng',$('checkin').value.replace('T','  ')],
+  ['Thời gian trả phòng',$('checkout').value.replace('T','  ')],
+  ['Hình thức thuê',$('kind').textContent],
+  ['Tiền phòng',$('base').textContent],
+  ['Tiền giờ thêm / phụ trội',$('extra').textContent],
+  ['Ưu đãi',$('saved').textContent],
+  ['Phụ thu / giảm trừ',$('adjust').textContent]
+ ];
+ const H=330+rows.length*rowH+100;canvas.width=W;canvas.height=H;
+ ctx.fillStyle='#f4f6f8';ctx.fillRect(0,0,W,H);
+ // Main white receipt card
+ const x=36,y=32,w=W-72,h=H-64,r=28;ctx.fillStyle='#ffffff';ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill();
+ ctx.fillStyle='#b77913';ctx.fillRect(x,y,w,12);
+ ctx.textAlign='center';ctx.fillStyle='#17212b';ctx.font='bold 38px Arial';ctx.fillText('SUN HOMESTAY',W/2,y+70);
+ ctx.font='20px Arial';ctx.fillStyle='#687684';ctx.fillText('PHIẾU THANH TOÁN PHÒNG',W/2,y+108);
+ ctx.font='18px Arial';ctx.fillStyle='#687684';ctx.fillText(branch||siteText,W/2,y+143);
+ let yy=y+190;
+ ctx.textAlign='left';
+ rows.forEach((row,i)=>{
+  if(i%2===0){ctx.fillStyle='#faf7ef';ctx.fillRect(x+36,yy-30,w-72,rowH);}
+  ctx.fillStyle='#687684';ctx.font='20px Arial';ctx.fillText(row[0],x+54,yy+5);
+  ctx.fillStyle='#17212b';ctx.font='bold 20px Arial';ctx.textAlign='right';
+  let val=row[1];while(ctx.measureText(val).width>w-430&&val.length>8)val=val.slice(0,-1);
+  ctx.fillText(val,x+w-54,yy+5);ctx.textAlign='left';yy+=rowH;
+ });
+ yy+=14;ctx.strokeStyle='#dce3e9';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x+42,yy-12);ctx.lineTo(x+w-42,yy-12);ctx.stroke();
+ ctx.fillStyle='#17212b';ctx.font='bold 25px Arial';ctx.fillText('TỔNG THANH TOÁN',x+54,yy+32);
+ ctx.textAlign='right';ctx.fillStyle='#b77913';ctx.font='bold 38px Arial';ctx.fillText($('total').textContent,x+w-54,yy+38);
+ ctx.textAlign='center';ctx.fillStyle='#687684';ctx.font='18px Arial';ctx.fillText('Cảm ơn quý khách đã lựa chọn Sun Homestay!',W/2,H-70);
+ const a=document.createElement('a');a.download='Sun-Homestay-phieu-thanh-toan.png';a.href=canvas.toDataURL('image/png');a.click();$('copystatus').textContent='Đã tạo ảnh phiếu thanh toán để gửi khách.';
+}
+$('downloadReceipt').addEventListener('click',downloadReceipt);
+
 $('copy').addEventListener('click',async()=>{const txt=`SUN HOMESTAY\nCơ sở: ${$('site').selectedOptions[0].text}\n${$('roomTitle').textContent}\nCheck-in: ${$('checkin').value.replace('T',' ')}\nCheck-out: ${$('checkout').value.replace('T',' ')}\nLoại thuê: ${$('kind').textContent}\nTổng thanh toán: ${$('total').textContent}`;try{await navigator.clipboard.writeText(txt);$('copystatus').textContent='Đã sao chép thông tin.';}catch(e){$('copystatus').textContent=txt;}});
 const now=new Date();const localVal=d=>{const pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;};
 $('checkin').value=localVal(now);const later=new Date(now.getTime()+24*3600000);later.setHours(13,0,0,0);$('checkout').value=localVal(later);refreshRooms();
