@@ -107,6 +107,11 @@
 <div class="section payment-section" id="paymentSection">
 <h3>QR chuyển khoản ngân hàng MB</h3>
 <p class="note">Quét mã để chuyển khoản đúng số tiền. Mã QR tự cập nhật sau khi tính tiền; cần có kết nối Internet để tải mã.</p>
+<div class="field" style="margin:10px 0 14px">
+  <label for="senderAccountName">TÊN TÀI KHOẢN NGÂN HÀNG NGƯỜI CHUYỂN</label>
+  <input id="senderAccountName" type="text" placeholder="Nhập tên tài khoản người chuyển">
+  <p class="note" style="margin-top:0">Nội dung chuyển khoản QR: tên tài khoản người chuyển + “chuyển tiền”.</p>
+</div>
 <div class="qr-grid">
  <article class="qr-card"><h4>Thanh toán 50%</h4><div class="qr-amount" id="halfAmount">—</div><img id="qrHalf" alt="Mã QR thanh toán 50%" loading="lazy"><p>Ngân hàng MB · STK 5919998888</p><a id="qrHalfLink" target="_blank" rel="noopener">Mở mã QR</a></article>
  <article class="qr-card"><h4>Thanh toán 100%</h4><div class="qr-amount" id="fullAmount">—</div><img id="qrFull" alt="Mã QR thanh toán toàn bộ" loading="lazy"><p>Ngân hàng MB · STK 5919998888</p><a id="qrFullLink" target="_blank" rel="noopener">Mở mã QR</a></article>
@@ -136,7 +141,9 @@ function setPaymentQRs(total){
  const half=valid?Math.round(total/2):0, full=valid?Math.round(total):0;
  $('halfAmount').textContent=valid?money(half):'—';$('fullAmount').textContent=valid?money(full):'—';
  const room=$('room').value||'';
- const makeUrl=(amount,tag)=>'https://img.vietqr.io/image/MB-5919998888-compact2.png?amount='+encodeURIComponent(amount)+'&addInfo='+encodeURIComponent('SUN HOMESTAY PHONG '+room+' '+tag)+'&accountName='+encodeURIComponent('HO KINH DOANH SUNHOMESTAY');
+ const senderName=(($('senderAccountName')?.value||'').trim());
+  const transferContent=[senderName, 'chuyển tiền'].filter(Boolean).join(' ');
+  const makeUrl=(amount,tag)=>'https://img.vietqr.io/image/MB-5919998888-compact2.png?amount='+encodeURIComponent(amount)+'&addInfo='+encodeURIComponent(transferContent)+'&accountName='+encodeURIComponent('HO KINH DOANH SUNHOMESTAY');
  if(valid){const u1=makeUrl(half,'THANH TOAN 50 PCT'),u2=makeUrl(full,'THANH TOAN 100 PCT');$('qrHalf').src=u1;$('qrHalfLink').href=u1;$('qrFull').src=u2;$('qrFullLink').href=u2;}
  else {$('qrHalf').removeAttribute('src');$('qrFull').removeAttribute('src');$('qrHalfLink').removeAttribute('href');$('qrFullLink').removeAttribute('href');}
 }
@@ -176,7 +183,7 @@ function calculate(){
  $('kind').textContent=kind;$('base').textContent=money(base);$('extra').textContent=money(extra);$('saved').textContent='− '+money(discount);$('adjust').textContent=(adj>0?'+ ':adj<0?'− ':'')+money(Math.abs(adj));$('total').textContent=money(total);$('hours').textContent=hours.toLocaleString('vi-VN',{maximumFractionDigits:2});$('nights').textContent=days;$('perday').textContent=money(price.day);
  setPaymentQRs(total);$('status').textContent='Đã cập nhật phép tính.';
 }
-$('site').addEventListener('change',refreshRooms);$('room').addEventListener('change',()=>{updateType();calculate()});['checkin','checkout','discount','manual'].forEach(id=>$(id).addEventListener('input',calculate));$('calc').addEventListener('click',calculate);
+$('site').addEventListener('change',refreshRooms);$('room').addEventListener('change',()=>{updateType();calculate()});['checkin','checkout','discount','manual'].forEach(id=>$(id).addEventListener('input',calculate));$('senderAccountName').addEventListener('input',calculate);$('calc').addEventListener('click',calculate);
 $('reset').addEventListener('click',()=>{$('checkin').value='';$('checkout').value='';$('discount').value='Tự động theo ngày';$('manual').value='0';$('status').textContent='Đã làm mới thông tin thời gian.';blank();});
 
 function downloadReceipt(){
@@ -220,7 +227,7 @@ function downloadReceipt(){
 }
 $('downloadReceipt').addEventListener('click',downloadReceipt);
 
-$('copy').addEventListener('click',async()=>{const txt=`SUN HOMESTAY\nCơ sở: ${$('site').selectedOptions[0].text}\n${$('roomTitle').textContent}\nCheck-in: ${$('checkin').value.replace('T',' ')}\nCheck-out: ${$('checkout').value.replace('T',' ')}\nLoại thuê: ${$('kind').textContent}\nTổng thanh toán: ${$('total').textContent}`;try{await navigator.clipboard.writeText(txt);$('copystatus').textContent='Đã sao chép thông tin.';}catch(e){$('copystatus').textContent=txt;}});
+$('copy').addEventListener('click',async()=>{const txt=`SUN HOMESTAY\nCơ sở: ${$('site').selectedOptions[0].text}\n${$('roomTitle').textContent}\nCheck-in: ${$('checkin').value.replace('T',' ')}\nCheck-out: ${$('checkout').value.replace('T',' ')}\nLoại thuê: ${$('kind').textContent}\nTổng thanh toán: ${$('total').textContent}\nNội dung chuyển khoản: ${[(($('senderAccountName')?.value||'').trim()),'chuyển tiền'].filter(Boolean).join(' ')}`;try{await navigator.clipboard.writeText(txt);$('copystatus').textContent='Đã sao chép thông tin.';}catch(e){$('copystatus').textContent=txt;}});
 const now=new Date();const localVal=d=>{const pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;};
 $('checkin').value=localVal(now);const later=new Date(now.getTime()+24*3600000);later.setHours(13,0,0,0);$('checkout').value=localVal(later);refreshRooms();
 </script></body></html>
