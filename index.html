@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sun Homestay · Check-in / Check-out</title>
+<style>
+:root{color-scheme:light dark;--bg:light-dark(#f4f6f8,#11151b);--surface:light-dark(#fff,#1b222b);--text:light-dark(#17212b,#eef3f8);--muted:light-dark(#687684,#aab6c3);--line:light-dark(#dce3e9,#35414e);--gold:light-dark(#b77913,#f5c15d);--green:light-dark(#18794e,#61d7a1);--input:light-dark(#fbfcfd,#151b22)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{background-color:var(--bg);min-height:100vh;width:100%;padding:28px 18px 48px}
+.wrap{max-width:1080px;margin:0 auto}.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{height:46px;width:46px;border-radius:14px;background:linear-gradient(135deg,#f5c15d,#a96d12);display:grid;place-items:center;color:#201708;font-weight:900;font-size:20px;box-shadow:0 5px 16px #b779132b}.eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:800}.brand h1{font-size:24px;margin:0;letter-spacing:-.03em}.sub{color:var(--muted);margin:2px 0 0;font-size:13px}
+.layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);gap:18px;align-items:start}.panel{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 8px 28px #00000008}.panel h2{font-size:17px;margin:0 0 4px;letter-spacing:-.02em}.hint{font-size:12px;color:var(--muted);margin:0 0 20px}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}.field label{font-size:12px;font-weight:750;color:var(--muted)}input,select{width:100%;border:1px solid var(--line);background:var(--input);color:var(--text);border-radius:11px;padding:12px 12px;font:inherit;outline:none;min-height:46px}input:focus,select:focus{border-color:var(--gold);box-shadow:0 0 0 3px #d99d2920}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}.btn{border:0;border-radius:12px;background:linear-gradient(135deg,#e8b54e,#c88719);color:#201708;font-weight:850;padding:13px 16px;cursor:pointer;font:inherit;font-weight:800;width:100%;min-height:48px}.btn.secondary{background:transparent;border:1px solid var(--line);color:var(--text)}.btnrow{display:flex;gap:10px;margin-top:8px}.result{background:linear-gradient(145deg,light-dark(#fff9eb,#2a2419),var(--surface));border:1px solid light-dark(#f0d69e,#6b542e);border-radius:18px;padding:20px;margin:18px 0}.resultTop{display:flex;justify-content:space-between;gap:10px;align-items:center}.pill{font-size:11px;font-weight:800;background:light-dark(#e7f5ec,#1c4432);color:var(--green);padding:5px 9px;border-radius:99px}.amount{font-size:clamp(27px,4vw,38px);font-weight:900;letter-spacing:-.04em;margin:7px 0;color:var(--gold)}.muted{color:var(--muted)}.breakdown{border-top:1px solid var(--line);margin-top:14px;padding-top:12px;display:grid;gap:9px}.line{display:flex;justify-content:space-between;gap:14px;font-size:13px}.line strong{font-variant-numeric:tabular-nums;text-align:right}.line.total{font-size:15px;font-weight:850;padding-top:9px;border-top:1px dashed var(--line)}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}.stat{background:var(--input);border:1px solid var(--line);padding:11px;border-radius:12px}.stat b{display:block;font-size:17px}.stat span{font-size:11px;color:var(--muted)}.section{margin-top:22px}.section h3{font-size:14px;margin:0 0 10px}.rates{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.rate{border:1px solid var(--line);border-radius:12px;padding:12px}.rate b{display:block;font-size:12px}.rate strong{display:block;color:var(--gold);font-size:16px;margin:3px 0}.rate small{color:var(--muted);font-size:11px}.note{font-size:11px;color:var(--muted);margin-top:14px}.status{font-size:12px;color:var(--green);min-height:18px;margin-top:8px}.hidden{display:none}
+@media(max-width:760px){#app{padding:20px 12px 32px}.layout{grid-template-columns:1fr}.panel{padding:18px}.brand h1{font-size:21px}.three{grid-template-columns:1fr 1fr}.rates{grid-template-columns:1fr 1fr}}
+@media(max-width:400px){.two{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.rates{grid-template-columns:1fr}}
+</style>
+</head>
+<body><main id="app"><div class="wrap">
+<header class="brand"><div class="logo">SH</div><div><div class="eyebrow">SUN HOMESTAY · FRONT DESK</div><h1>Tính tiền Check-in / Check-out</h1><p class="sub">Nhập giờ nhận và trả phòng để xem tiền phòng dự kiến.</p></div></header>
+<div class="layout">
+<section class="panel">
+<h2>Thông tin đặt phòng</h2><p class="hint">Chọn cơ sở, mã phòng và thời gian thực tế.</p>
+<div class="field"><label for="site">CƠ SỞ</label><select id="site"><option value="ndh">NĐH – Cầu Giấy · Số 60, ngõ 144 Nguyễn Đình Hoàn</option><option value="llq">LLQ – Tây Hồ · Số 16, hẻm 51/2, ngõ 89 Lạc Long Quân</option><option value="dc">Đội Cấn – Ba Đình · Số 10, ngách 222F, ngõ 260 Đội Cấn</option></select></div>
+<div class="two"><div class="field"><label for="room">MÃ PHÒNG</label><select id="room"></select></div><div class="field"><label for="type">HẠNG PHÒNG</label><input id="type" readonly></div></div>
+<div class="two"><div class="field"><label for="checkin">CHECK-IN</label><input type="datetime-local" id="checkin"></div><div class="field"><label for="checkout">CHECK-OUT</label><input type="datetime-local" id="checkout"></div></div>
+<div class="two"><div class="field"><label for="discount">ƯU ĐÃI THEO TỪNG NGÀY</label><input id="discount" type="text" value="Tự động theo ngày" readonly></div><div class="field"><label for="manual">PHỤ THU / GIẢM TRỪ (VNĐ)</label><input id="manual" type="number" value="0" step="1000"></div></div>
+<div class="btnrow"><button class="btn" id="calc">Tính tiền phòng</button><button class="btn secondary" id="reset">Làm mới</button></div><div class="status" id="status" aria-live="polite"></div>
+<p class="note">Ưu đãi tự động theo ngày check-in: Thứ 2–5: 15%, Thứ 6–7: 5%, Chủ Nhật: 10%. Chỉ áp dụng ưu đãi cho thuê Qua đêm / Ngày đêm; thuê 2H / 3H không ưu đãi. Có thể nhập phụ thu/giảm trừ âm dương theo thực tế.</p>
+</section>
+<section class="panel">
+<div class="resultTop"><div><div class="eyebrow">TỔNG THANH TOÁN DỰ KIẾN</div><h2 id="roomTitle">Chưa chọn phòng</h2></div><span class="pill" id="kindPill">Chờ nhập giờ</span></div>
+<div class="amount" id="grand">—</div><div class="muted" id="duration">Nhập thời gian check-in và check-out.</div>
+<div class="breakdown">
+<div class="line"><span>Loại thuê</span><strong id="kind">—</strong></div>
+<div class="line"><span>Đơn giá chính</span><strong id="base">—</strong></div>
+<div class="line"><span>Tiền giờ thêm / phụ trội</span><strong id="extra">—</strong></div>
+<div class="line"><span>Ưu đãi</span><strong id="saved">—</strong></div>
+<div class="line"><span>Phụ thu / giảm trừ</span><strong id="adjust">—</strong></div>
+<div class="line total"><span>THÀNH TIỀN</span><strong id="total">—</strong></div></div>
+<div class="stats"><div class="stat"><b id="hours">—</b><span>Giờ thực tế</span></div><div class="stat"><b id="nights">—</b><span>Ngày chênh lệch</span></div><div class="stat"><b id="perday">—</b><span>Giá ngày đêm</span></div></div>
+<div class="section"><h3>Bảng giá cơ sở đang chọn</h3><div class="rates" id="rates"></div></div>
+<div class="btnrow"><button class="btn secondary" id="copy">Sao chép thông tin thanh toán</button></div><div class="status" id="copystatus" aria-live="polite"></div>
+</section></div>
+</div></main>
+<script>
+const rates={
+ndh:{'PHÒNG THƯỜNG':{h2:169000,h3:269000,night:390000,day:470000,extra:80000,over:30000},'PHÒNG VIP':{h2:199000,h3:299000,night:440000,day:520000,extra:80000,over:30000},'PHÒNG SUITE':{h2:249000,h3:339000,night:490000,day:590000,extra:80000,over:30000}},
+llq:{'PHÒNG VIP':{h2:199000,h3:299000,night:440000,day:520000,extra:80000,over:30000},'PHÒNG SUITE':{h2:249000,h3:339000,night:490000,day:590000,extra:80000,over:30000}},
+dc:{'PHÒNG GOLD':{h2:249000,h3:299000,night:490000,day:650000,extra:80000,over:50000},'PHÒNG VIP':{h2:279000,h3:329000,night:530000,day:690000,extra:80000,over:50000},'PHÒNG SUITE':{h2:329000,h3:379000,night:590000,day:750000,extra:80000,over:50000},'PHÒNG DIAMOND':{h2:329000,h3:379000,night:620000,day:790000,extra:80000,over:50000}}
+};
+const roomMap={
+ndh:{101:'PHÒNG THƯỜNG',201:'PHÒNG THƯỜNG',202:'PHÒNG SUITE',301:'PHÒNG VIP',302:'PHÒNG SUITE',401:'PHÒNG VIP',402:'PHÒNG SUITE',501:'PHÒNG VIP',502:'PHÒNG SUITE',601:'PHÒNG VIP',602:'PHÒNG SUITE',701:'PHÒNG VIP',702:'PHÒNG SUITE'},
+llq:{202:'PHÒNG VIP',201:'PHÒNG SUITE',302:'PHÒNG VIP',301:'PHÒNG SUITE',402:'PHÒNG VIP',401:'PHÒNG SUITE',502:'PHÒNG VIP',501:'PHÒNG SUITE',602:'PHÒNG VIP',601:'PHÒNG SUITE'},
+dc:{201:'PHÒNG GOLD',202:'PHÒNG VIP',301:'PHÒNG GOLD',302:'PHÒNG VIP',401:'PHÒNG GOLD',402:'PHÒNG VIP',501:'PHÒNG GOLD',502:'PHÒNG VIP',601:'PHÒNG SUITE',602:'PHÒNG DIAMOND',701:'PHÒNG SUITE'}
+};
+const $=id=>document.getElementById(id);
+const money=n=>Math.round(n).toLocaleString('vi-VN')+' ₫';
+function refreshRooms(){const site=$('site').value;const map=roomMap[site];$('room').innerHTML=Object.keys(map).sort((a,b)=>+a- +b).map(r=>`<option value="${r}">Phòng ${r}</option>`).join('');updateType();renderRates();calculate();}
+function updateType(){$('type').value=roomMap[$('site').value][$('room').value]||'';$('roomTitle').textContent='Phòng '+$('room').value+' · '+$('type').value;}
+function renderRates(){const site=$('site').value;const r=rates[site];const available=[...new Set(Object.values(roomMap[site]))];$('rates').innerHTML=available.filter(name=>r[name]).map(name=>{const v=r[name];return `<div class="rate"><b>${name.replace('PHÒNG ','Phòng ')}</b><strong>2H ${money(v.h2)}</strong><small>3H ${money(v.h3)}<br>Qua đêm ${money(v.night)}<br>Ngày đêm ${money(v.day)}<br>Thêm 1H ${money(v.extra)} · Báo trước 1H ${money(v.over)}</small></div>`}).join('');}
+function blank(){['grand','duration','kind','base','extra','saved','adjust','total','hours','nights','perday'].forEach(id=>$(id).textContent='—');$('kindPill').textContent='Chờ nhập giờ';}
+function calculate(){
+ updateType();const ci=$('checkin').value,co=$('checkout').value;if(!ci||!co){blank();$('duration').textContent='Nhập thời gian check-in và check-out.';return;}
+ const start=new Date(ci),end=new Date(co),hours=(end-start)/36e5;if(!Number.isFinite(hours)||hours<=0){blank();$('duration').textContent='Giờ check-out phải sau check-in.';$('status').textContent='Vui lòng kiểm tra lại thời gian.';return;}
+ $('status').textContent='';const days=Math.max(0,Math.floor((new Date(end.getFullYear(),end.getMonth(),end.getDate())-new Date(start.getFullYear(),start.getMonth(),start.getDate()))/864e5));
+ const site=$('site').value,type=$('type').value,price=rates[site][type];let kind,base=0,extra=0,discount=0;
+ // Quy ước qua đêm đặc biệt: nhận lúc 21:00 và trả lúc 10:00 ngày hôm sau.
+ const overnightWindow=start.getHours()===21&&start.getMinutes()===0&&
+   end.getHours()===10&&end.getMinutes()===0&&days===1;
+ if(overnightWindow){kind='Qua đêm';base=price.night;}
+ else if(hours<=2){kind='2H';base=price.h2;}
+ else if(hours<6){kind='3H';base=price.h3;extra=Math.max(0,hours-3)*price.over;}
+ else if(hours<=12){kind='Qua đêm';base=price.night;}
+ else {kind='Ngày đêm';base=days>0?days*price.day:price.day;let extraHours=Math.max(0,hours-(days*24-2));if(extraHours>0){if(extraHours<=5)extra=extraHours*price.over;else if(extraHours<=12)extra=price.night;else extra=price.day;}}
+ const rateForDate=date=>{const weekday=date.getDay();return (weekday>=1&&weekday<=4)?15:(weekday===5||weekday===6)?5:10;};
+ if(kind==='Qua đêm'){
+   const discPct=rateForDate(start);$('discount').value=discPct+'%';
+   discount=base*discPct/100;
+   if(extra>=price.night)discount+=extra*discPct/100;
+ }else if(kind==='Ngày đêm'){
+   const dailyRates=[];discount=0;
+   const billableDays=Math.max(1,days);
+   for(let i=0;i<billableDays;i++){
+     const date=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i);
+     const pct=rateForDate(date);dailyRates.push(pct);discount+=price.day*pct/100;
+   }
+   // Giờ thêm chỉ được giảm khi đạt ít nhất giá một đêm; áp dụng mức ưu đãi của ngày trả phòng.
+   if(extra>=price.night)discount+=extra*rateForDate(end)/100;
+   $('discount').value=[...new Set(dailyRates)].map(p=>p+'%').join(' + ')+(extra>=price.night?' + giờ thêm':'');
+ }else{$('discount').value='Không áp dụng';discount=0;}
+ const adj=Number($('manual').value)||0;const total=Math.max(0,base+extra-discount+adj);
+ $('kindPill').textContent=kind;$('grand').textContent=money(total);$('duration').textContent=`${start.toLocaleString('vi-VN',{dateStyle:'medium',timeStyle:'short'})} → ${end.toLocaleString('vi-VN',{dateStyle:'medium',timeStyle:'short'})}`;
+ $('kind').textContent=kind;$('base').textContent=money(base);$('extra').textContent=money(extra);$('saved').textContent='− '+money(discount);$('adjust').textContent=(adj>0?'+ ':adj<0?'− ':'')+money(Math.abs(adj));$('total').textContent=money(total);$('hours').textContent=hours.toLocaleString('vi-VN',{maximumFractionDigits:2});$('nights').textContent=days;$('perday').textContent=money(price.day);
+ $('status').textContent='Đã cập nhật phép tính.';
+}
+$('site').addEventListener('change',refreshRooms);$('room').addEventListener('change',()=>{updateType();calculate()});['checkin','checkout','discount','manual'].forEach(id=>$(id).addEventListener('input',calculate));$('calc').addEventListener('click',calculate);
+$('reset').addEventListener('click',()=>{$('checkin').value='';$('checkout').value='';$('discount').value='Tự động theo ngày';$('manual').value='0';$('status').textContent='Đã làm mới thông tin thời gian.';blank();});
+$('copy').addEventListener('click',async()=>{const txt=`SUN HOMESTAY\nCơ sở: ${$('site').selectedOptions[0].text}\n${$('roomTitle').textContent}\nCheck-in: ${$('checkin').value.replace('T',' ')}\nCheck-out: ${$('checkout').value.replace('T',' ')}\nLoại thuê: ${$('kind').textContent}\nTổng thanh toán: ${$('total').textContent}`;try{await navigator.clipboard.writeText(txt);$('copystatus').textContent='Đã sao chép thông tin.';}catch(e){$('copystatus').textContent=txt;}});
+const now=new Date();const localVal=d=>{const pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;};
+$('checkin').value=localVal(now);const later=new Date(now.getTime()+24*3600000);later.setHours(13,0,0,0);$('checkout').value=localVal(later);refreshRooms();
+</script></body></html>
