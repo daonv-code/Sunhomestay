@@ -20,9 +20,18 @@
 .qr-card p{font-size:11px;color:#586575;margin:4px 0;overflow-wrap:anywhere}.qr-card a{font-size:12px;color:#1458a6;font-weight:700}
 @media(max-width:400px){.qr-grid{grid-template-columns:1fr}.qr-card img{max-width:230px}}
 
-.extension-site-room{display:grid;grid-template-columns:minmax(0,2fr) minmax(110px,.8fr);gap:12px}
-.extension-site-room .field{min-width:0}
-@media(max-width:420px){.extension-site-room{grid-template-columns:minmax(0,1.6fr) minmax(95px,.8fr);gap:8px}.extension-site-room select,.extension-site-room input{font-size:13px;padding:10px 7px}}
+.extension-panel{margin-top:18px;border-top:3px solid var(--gold)}
+.extension-panel h2{display:flex;align-items:center;gap:9px;font-size:18px;margin-bottom:5px}
+.extension-panel h2:before{content:"↗";display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;background:light-dark(#fff2d4,#3b2d18);color:var(--gold);font-size:18px}
+.extension-panel .hint{max-width:760px;line-height:1.6;margin-bottom:18px}
+.extension-site-room{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+.extension-site-room .field,.extension-panel .two .field,.extension-panel>.field{min-width:0;margin-bottom:14px}
+.extension-panel input,.extension-panel select{min-width:0}
+.extension-panel input[readonly]{background:light-dark(#fff8e9,#2b251b);border-color:light-dark(#ead3a0,#65502d);font-weight:750}
+.extension-panel .btnrow{margin-top:4px}
+.extension-panel .btn{min-height:50px;box-shadow:0 4px 12px #b7791317}
+.extension-panel .status{margin-top:10px}
+@media(max-width:420px){.extension-site-room{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.extension-site-room select,.extension-site-room input{font-size:13px;padding:10px 7px}.extension-panel .hint{font-size:12px}}
 
 /* Tablet and mobile layout */
 @media(max-width:760px){
@@ -121,7 +130,7 @@
 </div></div>
 <div class="btnrow"><button class="btn secondary" id="copy">Sao chép thông tin thanh toán</button><button class="btn" id="downloadReceipt">Tải ảnh gửi khách</button></div><div class="status" id="copystatus" aria-live="polite"></div><p class="note">Bấm “Tải ảnh gửi khách” để tạo phiếu thanh toán PNG gọn gàng, chỉ hiển thị thông tin cần gửi khách.</p>
 </section></div>
-<section class="panel" style="margin-top:18px">
+<section class="panel extension-panel">
 <h2>Gia hạn thêm giờ</h2><p class="hint">Nhập giờ check-in ban đầu và giờ check-out sau khi gia hạn. Số giờ tính theo chênh lệch thời gian × 80.000đ/giờ. Phiếu gia hạn riêng, không cộng vào bảng thanh toán phòng.</p>
 <div class="field"><label for="extCustomer">TÊN KHÁCH HÀNG</label><input id="extCustomer" type="text" placeholder="Nhập tên khách hàng"></div>
 <div class="extension-site-room"><div class="field"><label for="extSite">CƠ SỞ</label><select id="extSite"><option value="ndh">NĐH – Cầu Giấy · Số 60, ngõ 144 Nguyễn Đình Hoàn</option><option value="llq">LLQ – Tây Hồ · Số 16, hẻm 51/2, ngõ 89 Lạc Long Quân</option><option value="dc">Đội Cấn – Ba Đình · Số 10, ngách 222F, ngõ 260 Đội Cấn</option></select></div><div class="field"><label for="extRoom">MÃ PHÒNG</label><input id="extRoom" type="text" placeholder="Ví dụ: 101"></div></div>
