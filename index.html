@@ -20,6 +20,10 @@
 .qr-card p{font-size:11px;color:#586575;margin:4px 0;overflow-wrap:anywhere}.qr-card a{font-size:12px;color:#1458a6;font-weight:700}
 @media(max-width:400px){.qr-grid{grid-template-columns:1fr}.qr-card img{max-width:230px}}
 
+.extension-site-room{display:grid;grid-template-columns:minmax(0,2fr) minmax(110px,.8fr);gap:12px}
+.extension-site-room .field{min-width:0}
+@media(max-width:420px){.extension-site-room{grid-template-columns:minmax(0,1.6fr) minmax(95px,.8fr);gap:8px}.extension-site-room select,.extension-site-room input{font-size:13px;padding:10px 7px}}
+
 /* Tablet and mobile layout */
 @media(max-width:760px){
   #app{padding:16px 10px 28px}
@@ -91,7 +95,7 @@
 <div class="two"><div class="field"><label for="checkin">CHECK-IN</label><input type="datetime-local" id="checkin"></div><div class="field"><label for="checkout">CHECK-OUT</label><input type="datetime-local" id="checkout"></div></div>
 <div class="two"><div class="field"><label for="customerName">TÊN KHÁCH HÀNG</label><input id="customerName" type="text" placeholder="Nhập tên khách hàng"></div><div class="field"><label for="guestCount">SỐ LƯỢNG NGƯỜI Ở</label><input id="guestCount" type="number" min="1" step="1" value="2" placeholder="Nhập số người ở"></div></div>
 <div class="field"><label>GIÁ KHUYẾN MÃI QUA ĐÊM ĐẾN 10:00 HÔM SAU</label><div class="promo-options"><label><input type="radio" name="promoNight" value="0" checked> Không áp dụng</label><label><input type="radio" name="promoNight" value="300000"> 300.000đ</label><label><input type="radio" name="promoNight" value="400000"> 400.000đ</label></div><p class="note" style="margin-top:0">Giá khuyến mãi tính từ giờ check-in đến 10:00 sáng hôm sau. Nếu trả sau 10:00, thời gian vượt sẽ tính giờ dư theo bảng giá cơ sở.</p></div>
-<div class="two"><div class="field"><label for="discount">ƯU ĐÃI THEO TỪNG NGÀY</label><input id="discount" type="text" value="Tự động theo ngày" readonly></div><div class="field"><label for="manual">PHỤ THU / GIẢM TRỪ (VNĐ)</label><input id="manual" type="number" value="0" step="1000"></div></div>
+<div class="field"><label for="manual">PHỤ THU / GIẢM TRỪ (VNĐ)</label><input id="manual" type="number" value="0" step="1000"></div><div class="field"><label for="discount">ƯU ĐÃI THEO TỪNG NGÀY</label><input id="discount" type="text" value="Tự động theo ngày" readonly></div>
 <div class="btnrow"><button class="btn" id="calc">Tính tiền phòng</button><button class="btn secondary" id="reset">Làm mới</button></div><div class="status" id="status" aria-live="polite"></div>
 <p class="note">Ưu đãi tự động theo ngày check-in: Thứ 2–5: 15%, Thứ 6–7: 5%, Chủ Nhật: 10%. Chỉ áp dụng ưu đãi cho thuê Qua đêm / Ngày đêm; thuê 2H / 3H không ưu đãi. Có thể nhập phụ thu/giảm trừ âm dương theo thực tế.</p>
 </section>
@@ -117,6 +121,14 @@
 </div></div>
 <div class="btnrow"><button class="btn secondary" id="copy">Sao chép thông tin thanh toán</button><button class="btn" id="downloadReceipt">Tải ảnh gửi khách</button></div><div class="status" id="copystatus" aria-live="polite"></div><p class="note">Bấm “Tải ảnh gửi khách” để tạo phiếu thanh toán PNG gọn gàng, chỉ hiển thị thông tin cần gửi khách.</p>
 </section></div>
+<section class="panel" style="margin-top:18px">
+<h2>Gia hạn thêm giờ</h2><p class="hint">Nhập giờ check-in ban đầu và giờ check-out sau khi gia hạn. Số giờ tính theo chênh lệch thời gian × 80.000đ/giờ. Phiếu gia hạn riêng, không cộng vào bảng thanh toán phòng.</p>
+<div class="field"><label for="extCustomer">TÊN KHÁCH HÀNG</label><input id="extCustomer" type="text" placeholder="Nhập tên khách hàng"></div>
+<div class="extension-site-room"><div class="field"><label for="extSite">CƠ SỞ</label><select id="extSite"><option value="ndh">NĐH – Cầu Giấy · Số 60, ngõ 144 Nguyễn Đình Hoàn</option><option value="llq">LLQ – Tây Hồ · Số 16, hẻm 51/2, ngõ 89 Lạc Long Quân</option><option value="dc">Đội Cấn – Ba Đình · Số 10, ngách 222F, ngõ 260 Đội Cấn</option></select></div><div class="field"><label for="extRoom">MÃ PHÒNG</label><input id="extRoom" type="text" placeholder="Ví dụ: 101"></div></div>
+<div class="two"><div class="field"><label for="extCheckin">GIỜ CHECK-IN</label><input id="extCheckin" type="datetime-local"></div><div class="field"><label for="extCheckout">GIỜ CHECK-OUT</label><input id="extCheckout" type="datetime-local"></div></div>
+<div class="two"><div class="field"><label for="extensionHours">SỐ GIỜ GIA HẠN</label><input id="extensionHours" type="text" readonly value="—"></div><div class="field"><label for="extensionFeeDisplay">PHÍ GIA HẠN (80.000đ/GIỜ)</label><input id="extensionFeeDisplay" type="text" readonly value="—"></div></div>
+<div class="btnrow"><button class="btn" id="downloadExtension">Tải phiếu gia hạn gửi khách</button></div><div class="status" id="extensionStatus" aria-live="polite"></div>
+</section>
 </div></main>
 <script>
 const rates={
@@ -209,7 +221,7 @@ function downloadReceipt(){
   ['Hình thức thuê',$('kind').textContent],
   ['Tiền phòng',$('base').textContent],
   ['Tiền giờ thêm / phụ trội',$('extra').textContent],
-  ['Ưu đãi',$('saved').textContent.replace(/^[−-]\s*/, '')],
+    ['Ưu đãi',$('saved').textContent.replace(/^[−-]\s*/, '')],
   ['Phụ thu / giảm trừ',$('adjust').textContent]
  ];
  const H=330+rows.length*rowH+100;canvas.width=W;canvas.height=H;
@@ -239,5 +251,26 @@ $('downloadReceipt').addEventListener('click',downloadReceipt);
 
 $('copy').addEventListener('click',async()=>{const txt=`SUN HOMESTAY\nCơ sở: ${$('site').selectedOptions[0].text}\n${$('roomTitle').textContent}\nCheck-in: ${$('checkin').value.replace('T',' ')}\nCheck-out: ${$('checkout').value.replace('T',' ')}\nLoại thuê: ${$('kind').textContent}\nTổng thanh toán: ${$('total').textContent}\nTên khách hàng: ${$('customerName').value.trim()}\nSố lượng người ở: ${$('guestCount').value || '—'}\nNội dung chuyển khoản: ${[(($('customerName')?.value||'').trim()),'chuyển tiền'].filter(Boolean).join(' ')}`;try{await navigator.clipboard.writeText(txt);$('copystatus').textContent='Đã sao chép thông tin.';}catch(e){$('copystatus').textContent=txt;}});
 const now=new Date();const localVal=d=>{const pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;};
-$('checkin').value=localVal(now);const later=new Date(now.getTime()+24*3600000);later.setHours(13,0,0,0);$('checkout').value=localVal(later);refreshRooms();
+function updateExtension(){
+ const ci=$('extCheckin').value, co=$('extCheckout').value;
+ if(!ci||!co){$('extensionHours').value='—';$('extensionFeeDisplay').value='—';return null;}
+ const start=new Date(ci),end=new Date(co),mins=(end-start)/60000;
+ if(!Number.isFinite(mins)||mins<=0){$('extensionHours').value='Thời gian không hợp lệ';$('extensionFeeDisplay').value='—';return null;}
+ const hours=mins/60,fee=Math.round(hours*80000);
+ $('extensionHours').value=(Math.round(hours*100)/100).toLocaleString('vi-VN')+' giờ';
+ $('extensionFeeDisplay').value=fee.toLocaleString('vi-VN')+' ₫';return {start,end,hours,fee};
+}
+['extCheckin','extCheckout'].forEach(id=>$(id).addEventListener('input',updateExtension));
+$('downloadExtension').addEventListener('click',()=>{
+ const data=updateExtension(); if(!data){$('extensionStatus').textContent='Vui lòng nhập giờ check-in và check-out hợp lệ.';return;}
+ const fmt=d=>d.toLocaleString('vi-VN',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false});
+ const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');canvas.width=1000;canvas.height=800;
+ ctx.fillStyle='#f4f6f8';ctx.fillRect(0,0,1000,800);ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect(36,28,928,744,24);ctx.fill();ctx.fillStyle='#b77913';ctx.fillRect(36,28,928,12);
+ ctx.textAlign='center';ctx.fillStyle='#17212b';ctx.font='bold 42px Arial';ctx.fillText('SUN HOMESTAY',500,105);ctx.fillStyle='#687684';ctx.font='26px Arial';ctx.fillText('PHIẾU GIA HẠN THỜI GIAN LƯU TRÚ',500,150);
+ const rows=[['Tên khách hàng',$('extCustomer').value.trim()||'—'],['Cơ sở',$('extSite').selectedOptions[0]?.text||'—'],['Mã phòng',$('extRoom').value.trim()||'—'],['Giờ check-in',fmt(data.start)],['Giờ check-out',fmt(data.end)],['Thời gian gia hạn',(Math.round(data.hours*100)/100).toLocaleString('vi-VN')+' giờ'],['Đơn giá','80.000 ₫/giờ']];let y=205;
+ ctx.textAlign='left';rows.forEach((r,i)=>{if(i%2===0){ctx.fillStyle='#faf7ef';ctx.fillRect(72,y-30,856,58)}ctx.fillStyle='#687684';ctx.font='23px Arial';ctx.fillText(r[0],92,y+5);ctx.textAlign='right';ctx.fillStyle='#17212b';ctx.font='bold 23px Arial';ctx.fillText(r[1],908,y+5);ctx.textAlign='left';y+=60;});
+ ctx.strokeStyle='#dce3e9';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(80, y+4);ctx.lineTo(920,y+4);ctx.stroke();ctx.fillStyle='#17212b';ctx.font='bold 27px Arial';ctx.fillText('PHÍ GIA HẠN',92,y+55);ctx.textAlign='right';ctx.fillStyle='#b77913';ctx.font='bold 40px Arial';ctx.fillText(data.fee.toLocaleString('vi-VN')+' ₫',908,y+58);ctx.textAlign='center';ctx.fillStyle='#687684';ctx.font='19px Arial';ctx.fillText('Cảm ơn quý khách đã lựa chọn Sun Homestay!',500,755);
+ const a=document.createElement('a'),name=($('extCustomer').value||'').trim().replace(/[\\/:*?"<>|]/g,'-').replace(/\s+/g,' ').slice(0,80);a.download=(name?name+' - phieu gia han':'Sun-Homestay-phieu-gia-han')+'.png';a.href=canvas.toDataURL('image/png');a.click();$('extensionStatus').textContent='Đã tạo phiếu gia hạn PNG để gửi khách.';
+});
+$('extSite').value=$('site').value;$('checkin').value=localVal(now);const later=new Date(now.getTime()+24*3600000);later.setHours(13,0,0,0);$('checkout').value=localVal(later);$('extCheckin').value=$('checkin').value;$('extCheckout').value=$('checkout').value;refreshRooms();updateExtension();
 </script></body></html>
