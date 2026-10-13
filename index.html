@@ -147,10 +147,10 @@
 <div class="two"><div class="field"><label for="room">MÃ PHÒNG</label><select id="room"></select></div><div class="field"><label for="type">HẠNG PHÒNG</label><input id="type" readonly></div></div>
 <div class="two"><div class="field"><label for="checkin">CHECK-IN</label><input type="datetime-local" id="checkin"></div><div class="field"><label for="checkout">CHECK-OUT</label><input type="datetime-local" id="checkout"></div></div>
 <div class="two"><div class="field"><label for="customerName">TÊN KHÁCH HÀNG</label><input id="customerName" type="text" placeholder="Nhập tên khách hàng"></div><div class="field"><label for="guestCount">SỐ LƯỢNG NGƯỜI Ở</label><input id="guestCount" type="number" min="1" step="1" value="2" placeholder="Nhập số người ở"></div></div>
-<div class="field"><label>GIÁ KHUYẾN MÃI QUA ĐÊM ĐẾN 10:00 HÔM SAU</label><div class="promo-options"><label><input type="radio" name="promoNight" value="0" checked> Không áp dụng</label><label><input type="radio" name="promoNight" value="300000"> 300.000đ</label><label><input type="radio" name="promoNight" value="400000"> 400.000đ</label></div><p class="note" style="margin-top:0">Gói 300.000đ / 400.000đ áp dụng từ giờ check-in đến 10:00 sáng hôm sau. Phần còn lại sau 10:00: dưới 6h tính 30.000đ/giờ (cơ sở Đội Cấn: 50.000đ/giờ); từ 6 đến dưới 12h tính giá qua đêm; từ 12 đến 24h tính giá ngày đêm. Ưu đãi theo ngày chỉ áp dụng cho phần qua đêm / ngày đêm, không giảm vào gói khuyến mãi.</p></div>
+<div class="field"><label>GIÁ KHUYẾN MÃI QUA ĐÊM ĐẾN 10:00 HÔM SAU</label><div class="promo-options"><label><input type="radio" name="promoNight" value="0" checked> Không áp dụng</label><label><input type="radio" name="promoNight" value="300000"> 300.000đ</label><label><input type="radio" name="promoNight" value="400000"> 400.000đ</label></div><p class="note" style="margin-top:0">Gói 300.000đ / 400.000đ áp dụng từ giờ check-in đến mốc 10:00 kế tiếp (check-in trước 10:00: tính đến 10:00 cùng ngày; check-in từ 10:00 trở đi: tính đến 10:00 hôm sau). Phần còn lại sau mốc 10:00: dưới 6h tính 30.000đ/giờ (cơ sở Đội Cấn: 50.000đ/giờ); từ 6 đến dưới 12h tính giá qua đêm; từ 12 đến 24h tính giá ngày đêm. Ưu đãi theo ngày chỉ áp dụng cho phần qua đêm / ngày đêm, không giảm vào gói khuyến mãi.</p></div>
 <div class="field"><label for="manual">PHỤ THU / GIẢM TRỪ (VNĐ)</label><input id="manual" type="number" value="0" step="1000"></div><div class="field"><label for="discount">ƯU ĐÃI THEO TỪNG NGÀY</label><input id="discount" type="text" value="Tự động theo ngày" readonly></div>
 <div class="btnrow"><button class="btn" id="calc">Tính tiền phòng</button><button class="btn secondary" id="reset">Làm mới</button></div><div class="status" id="status" aria-live="polite"></div>
-<p class="note">Ưu đãi tự động: Thứ 2–5: 15%, Thứ 6–7: 5%, Chủ Nhật: 10%. Với gói khuyến mãi đến 10:00, ưu đãi chỉ trừ vào phí thời gian còn lại được tính theo giá qua đêm / ngày đêm; không trừ vào giá gói. Có thể nhập phụ thu/giảm trừ âm dương theo thực tế.</p>
+<p class="note">Ưu đãi tự động: Thứ 2–5: 15%, Thứ 6–7: 5%, Chủ Nhật: 10%. Với gói khuyến mãi đến 10:00 kế tiếp, ưu đãi chỉ trừ vào phí thời gian còn lại được tính theo giá qua đêm / ngày đêm; không trừ vào giá gói. Có thể nhập phụ thu/giảm trừ âm dương theo thực tế.</p>
 </section>
 <section class="panel">
 <div class="resultTop"><div><div class="eyebrow">TỔNG THANH TOÁN DỰ KIẾN</div><h2 id="roomTitle">Chưa chọn phòng</h2></div><span class="pill" id="kindPill">Chờ nhập giờ</span></div>
@@ -220,10 +220,15 @@ function calculate(){
  const promoPrice=Number(document.querySelector('input[name="promoNight"]:checked')?.value||0);
  const rateForDate=date=>{const weekday=date.getDay();return (weekday>=1&&weekday<=4)?15:(weekday===5||weekday===6)?5:10;};
  if(promoPrice>0){
-   // Gói khuyến mãi bao gồm thời gian từ check-in đến 10:00 sáng hôm sau.
-   // Chỉ phần thời gian sau 10:00 mới tính thêm và mới được xét ưu đãi theo loại thuê.
+   // Gói khuyến mãi áp dụng từ giờ check-in đến mốc 10:00 kế tiếp.
+   // Nếu check-in trước 10:00 thì ưu đãi kết thúc lúc 10:00 cùng ngày;
+   // nếu check-in từ 10:00 trở đi thì kết thúc lúc 10:00 ngày hôm sau.
    kind='Khuyến mãi đến 10:00';base=promoPrice;
-   const promoEnd=new Date(start.getFullYear(),start.getMonth(),start.getDate()+1,10,0,0,0);
+   const promoEnd=new Date(start.getFullYear(),start.getMonth(),start.getDate(),
+     start.getHours()<10 ? 10 : 10,0,0,0);
+   if(start.getHours()>=10 || (start.getHours()===10 && start.getMinutes()>0)){
+     promoEnd.setDate(promoEnd.getDate()+1);
+   }
    let remainingHours=Math.max(0,(end-promoEnd)/36e5);
    let cursor=new Date(promoEnd);
    const discountParts=[];
@@ -347,7 +352,7 @@ function downloadReceipt(){
      let amountSize=40;
      ctx.font=`800 ${amountSize}px Arial`;
      while(ctx.measureText(String(it.value??'')).width>278&&amountSize>28){amountSize--;ctx.font=`800 ${amountSize}px Arial`;}
-     text(it.value,it.x+88,it.y+34,amountSize,'#073b2a',true);
+     text(it.value,it.x+88,it.y+34,amountSize,'#c62828',true); // Màu đỏ nổi bật cho tổng thanh toán
    }else{
      round(it.x,it.y-25,68,68,34,C.green);
      text(it.icon,it.x+34,it.y+20,32,C.white,true,'center');
