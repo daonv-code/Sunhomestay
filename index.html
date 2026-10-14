@@ -424,32 +424,22 @@ function downloadReceipt(){
 }
 $('downloadReceipt').addEventListener('click',downloadReceipt);
 
-$('copy').addEventListener('click',async()=>{const customerName=$('customerName').value.trim();const customerPhone='[SĐT]';const transferContent=[customerName,customerPhone].filter(Boolean).join(' + ');const txt=`🏡 SUN HOMESTAY
-📍 Cơ sở: ${$('site').selectedOptions[0].text}
-🛏️ Phòng: Mã phòng ${$('room').value} · Hạng phòng ${$('type').value || '—'}
-🟢 Check-in: ${$('checkin').value.replace('T',' ')}
-🔴 Check-out: ${$('checkout').value.replace('T',' ')}
-🌙 Loại thuê: ${$('kind').textContent}
-💰 Tổng thanh toán: ${$('total').textContent}
-👤 Tên khách hàng: ${customerName || '—'}
-👥 Số lượng người ở: ${$('guestCount').value || '—'}
-
-━━━━━━━━━━━━━━━━━━━━
-💳 THÔNG TIN THANH TOÁN (MB Bank)
-━━━━━━━━━━━━━━━━━━━━
-🏦 Chủ tài khoản: HỘ KINH DOANH SUNHOMESTAY
-🔢 Số tài khoản: 5919998888
-📝 Nội dung CK: ${transferContent || '[Họ tên] + [SĐT]'}
-
-━━━━━━━━━━━━━━━━━━━━
-🧾 YÊU CẦU THỦ TỤC CHECK-IN
-━━━━━━━━━━━━━━━━━━━━
-1️⃣ Gửi Họ & Tên + SĐT người đặt.
-2️⃣ Gửi ảnh CCCD 2 mặt hoặc VNeID.
-3️⃣ Chuyển cọc 50% để giữ phòng.
-
-━━━━━━━━━━━━━━━━━━━━
-❤️ Cảm ơn anh/chị đã lựa chọn Sun Homestay!`;try{await navigator.clipboard.writeText(txt);$('copystatus').textContent='Đã sao chép thông tin đặt phòng, thanh toán và thủ tục check-in.';}catch(e){$('copystatus').textContent=txt;}})
+$('copy').addEventListener('click',async()=>{
+ const pad=n=>String(n).padStart(2,'0');
+ const formatDateTime=value=>{
+  if(!value)return '—';
+  const d=new Date(value);
+  if(!Number.isFinite(d.getTime()))return '—';
+  return `${pad(d.getHours())}:${pad(d.getMinutes())}:00 ${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
+ };
+ const txt=`Cơ sở: ${$('site').selectedOptions[0]?.text||'—'}
+Hạng phòng: ${$('type').value||'—'}
+Check-in: ${formatDateTime($('checkin').value)}
+Check-out: ${formatDateTime($('checkout').value)}
+Tiền: ${$('total').textContent||'—'}`;
+ try{await navigator.clipboard.writeText(txt);$('copystatus').textContent='Đã sao chép thông tin thanh toán.';}
+ catch(e){$('copystatus').textContent=txt;}
+});
 const now=new Date();const localVal=d=>{const pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;};
 function refreshExtensionRooms(){
  const site=$('extSite').value, map=roomMap[site]||{};const previous=$('extRoom').value;
