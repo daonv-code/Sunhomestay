@@ -147,7 +147,7 @@
 <div class="two"><div class="field"><label for="room">MÃ PHÒNG</label><select id="room"></select></div><div class="field"><label for="type">HẠNG PHÒNG</label><input id="type" readonly></div></div>
 <div class="two"><div class="field"><label for="checkin">CHECK-IN</label><input type="datetime-local" id="checkin"></div><div class="field"><label for="checkout">CHECK-OUT</label><input type="datetime-local" id="checkout"></div></div>
 <div class="two"><div class="field"><label for="customerName">TÊN KHÁCH HÀNG</label><input id="customerName" type="text" placeholder="Nhập tên khách hàng"></div><div class="field"><label for="guestCount">SỐ LƯỢNG NGƯỜI Ở</label><input id="guestCount" type="number" min="1" step="1" value="2" placeholder="Nhập số người ở"></div></div>
-<div class="field"><label>GIÁ KHUYẾN MÃI QUA ĐÊM ĐẾN 10:00 HÔM SAU</label><div class="promo-options"><label><input type="radio" name="promoNight" value="0" checked> Không áp dụng</label><label><input type="radio" name="promoNight" value="300000"> 300.000đ</label><label><input type="radio" name="promoNight" value="400000"> 400.000đ</label></div><p class="note" style="margin-top:0">Gói 300.000đ / 400.000đ áp dụng từ giờ check-in đến mốc 10:00 kế tiếp (check-in trước 10:00: tính đến 10:00 cùng ngày; check-in từ 10:00 trở đi: tính đến 10:00 hôm sau). Phần còn lại sau mốc 10:00: dưới 6h tính 30.000đ/giờ (cơ sở Đội Cấn: 50.000đ/giờ); từ 6 đến dưới 12h tính giá qua đêm; từ 12 đến 24h tính giá ngày đêm. Ưu đãi theo ngày chỉ áp dụng cho phần qua đêm / ngày đêm, không giảm vào gói khuyến mãi.</p></div>
+<div class="field"><label>GIÁ KHUYẾN MÃI QUA ĐÊM ĐẾN 10:00 HÔM SAU</label><div class="promo-options"><label><input type="radio" name="promoNight" value="0" checked> Không áp dụng</label><label><input type="radio" name="promoNight" value="300000"> 300.000đ</label><label><input type="radio" name="promoNight" value="400000"> 400.000đ</label></div><p class="note" style="margin-top:0">Gói 300.000đ / 400.000đ áp dụng từ giờ check-in đến mốc 10:00 kế tiếp (check-in trước 10:00: tính đến 10:00 cùng ngày; check-in từ 10:00 trở đi: tính đến 10:00 hôm sau). Phần còn lại sau mốc 10:00: dưới 6h tính 50.000đ/giờ; từ 6 đến dưới 12h tính giá qua đêm; từ 12 đến 24h tính giá ngày đêm. Ưu đãi theo ngày chỉ áp dụng cho phần qua đêm / ngày đêm, không giảm vào gói khuyến mãi.</p></div>
 <div class="field"><label for="manual">PHỤ THU / GIẢM TRỪ (VNĐ)</label><input id="manual" type="number" value="0" step="1000"></div><div class="field"><label for="discount">ƯU ĐÃI THEO TỪNG NGÀY</label><input id="discount" type="text" value="Tự động theo ngày" readonly></div>
 <div class="btnrow"><button class="btn" id="calc">Tính tiền phòng</button><button class="btn secondary" id="reset">Làm mới</button></div><div class="status" id="status" aria-live="polite"></div>
 <p class="note">Ưu đãi tự động: Thứ 2–5: 15%, Thứ 6–7: 5%, Chủ Nhật: 10%. Với gói khuyến mãi đến 10:00 kế tiếp, ưu đãi chỉ trừ vào phí thời gian còn lại được tính theo giá qua đêm / ngày đêm; không trừ vào giá gói. Có thể nhập phụ thu/giảm trừ âm dương theo thực tế.</p>
@@ -232,7 +232,7 @@ function calculate(){
    let remainingHours=Math.max(0,(end-promoEnd)/36e5);
    let cursor=new Date(promoEnd);
    const discountParts=[];
-   const hourlyRate=site==='dc'?50000:30000;
+   const hourlyRate=50000;
    const addDiscount=(amount,date,label)=>{
      const pct=rateForDate(date);discount+=amount*pct/100;
      discountParts.push(`${label} ${pct}%`);
@@ -259,7 +259,19 @@ function calculate(){
  else if(hours<=2){kind='2H';base=price.h2;}
  else if(hours<6){kind='3H';base=price.h3;extra=Math.max(0,hours-3)*price.over;}
  else if(hours<=12){kind='Qua đêm';base=price.night;}
- else {kind='Ngày đêm';base=days>0?days*price.day:price.day;let extraHours=Math.max(0,hours-(days*24-2));if(extraHours>0){if(extraHours<=5)extra=extraHours*price.over;else if(extraHours<=12)extra=price.night;else extra=price.day;}}
+ else {
+   kind='Ngày đêm';
+   // Tính theo tổng thời lượng thực tế, không dùng số ngày đổi lịch để suy ra giờ thêm.
+   // Từ 12 đến 24 giờ chỉ tính 1 giá ngày đêm, ví dụ 00:00–14:00 = 14 giờ.
+   const fullDays=Math.floor(hours/24);
+   const remainderHours=hours-(fullDays*24);
+   base=Math.max(1,fullDays)*price.day;
+   if(fullDays>0 && remainderHours>0){
+     if(remainderHours<=5) extra=remainderHours*price.over;
+     else if(remainderHours<=12) extra=price.night;
+     else extra=price.day;
+   }
+ }
  if(kind==='Qua đêm'){
    const discPct=rateForDate(start);$('discount').value=discPct+'%';
    discount=base*discPct/100;
@@ -424,22 +436,32 @@ function downloadReceipt(){
 }
 $('downloadReceipt').addEventListener('click',downloadReceipt);
 
-$('copy').addEventListener('click',async()=>{
- const pad=n=>String(n).padStart(2,'0');
- const formatDateTime=value=>{
-  if(!value)return '—';
-  const d=new Date(value);
-  if(!Number.isFinite(d.getTime()))return '—';
-  return `${pad(d.getHours())}:${pad(d.getMinutes())}:00 ${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()}`;
- };
- const txt=`Cơ sở: ${$('site').selectedOptions[0]?.text||'—'}
-Hạng phòng: ${$('type').value||'—'}
-Check-in: ${formatDateTime($('checkin').value)}
-Check-out: ${formatDateTime($('checkout').value)}
-Tiền: ${$('total').textContent||'—'}`;
- try{await navigator.clipboard.writeText(txt);$('copystatus').textContent='Đã sao chép thông tin thanh toán.';}
- catch(e){$('copystatus').textContent=txt;}
-});
+$('copy').addEventListener('click',async()=>{const customerName=$('customerName').value.trim();const customerPhone='[SĐT]';const transferContent=[customerName,customerPhone].filter(Boolean).join(' + ');const txt=`🏡 SUN HOMESTAY
+📍 Cơ sở: ${$('site').selectedOptions[0].text}
+🛏️ Phòng: Mã phòng ${$('room').value} · Hạng phòng ${$('type').value || '—'}
+🟢 Check-in: ${$('checkin').value.replace('T',' ')}
+🔴 Check-out: ${$('checkout').value.replace('T',' ')}
+🌙 Loại thuê: ${$('kind').textContent}
+💰 Tổng thanh toán: ${$('total').textContent}
+👤 Tên khách hàng: ${customerName || '—'}
+👥 Số lượng người ở: ${$('guestCount').value || '—'}
+
+━━━━━━━━━━━━━━━━━━━━
+💳 THÔNG TIN THANH TOÁN (MB Bank)
+━━━━━━━━━━━━━━━━━━━━
+🏦 Chủ tài khoản: HỘ KINH DOANH SUNHOMESTAY
+🔢 Số tài khoản: 5919998888
+📝 Nội dung CK: ${transferContent || '[Họ tên] + [SĐT]'}
+
+━━━━━━━━━━━━━━━━━━━━
+🧾 YÊU CẦU THỦ TỤC CHECK-IN
+━━━━━━━━━━━━━━━━━━━━
+1️⃣ Gửi Họ & Tên + SĐT người đặt.
+2️⃣ Gửi ảnh CCCD 2 mặt hoặc VNeID.
+3️⃣ Chuyển cọc 50% để giữ phòng.
+
+━━━━━━━━━━━━━━━━━━━━
+❤️ Cảm ơn anh/chị đã lựa chọn Sun Homestay!`;try{await navigator.clipboard.writeText(txt);$('copystatus').textContent='Đã sao chép thông tin đặt phòng, thanh toán và thủ tục check-in.';}catch(e){$('copystatus').textContent=txt;}})
 const now=new Date();const localVal=d=>{const pad=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;};
 function refreshExtensionRooms(){
  const site=$('extSite').value, map=roomMap[site]||{};const previous=$('extRoom').value;
