@@ -760,14 +760,14 @@ function calculate(){
      discount+=price.day*pct/100;
      segmentStart=new Date(segmentStart.getTime()+24*3600000);
    }
-   if(remainderHours>=6 && remainderHours<=12){
-     const pct=rateForDate(segmentStart);
-     dailyRates.push(pct);
-     discount+=price.night*pct/100;
-   }else if(remainderHours>12){
-     const pct=rateForDate(segmentStart);
-     dailyRates.push(pct);
-     discount+=price.day*pct/100;
+   if(remainderHours>0){
+     const remainderEnd=new Date(segmentStart.getTime()+remainderHours*3600000);
+     const remainderClass=classifyRemainder(segmentStart,remainderEnd,remainderHours);
+     if(remainderClass==='night' || remainderClass==='day'){
+       const pct=rateForDate(segmentStart);
+       dailyRates.push(pct);
+       discount+=(remainderClass==='night'?price.night:price.day)*pct/100;
+     }
    }
    $('discount').value=[...new Set(dailyRates)].map(p=>p+'%').join(' + ')+(remainderHours>=6?' · ưu đãi theo từng mốc tính phí':'');
  }else{$('discount').value='Không áp dụng';discount=0;}
@@ -945,9 +945,15 @@ $('downloadNote').addEventListener('click',()=>{
    const allotted=index===1?22:24;
    const segEnd=new Date(Math.min(end.getTime(),segStart.getTime()+allotted*3600000));
    const segHours=(segEnd-segStart)/3600000;
+   const sameDate=segStart.getFullYear()===segEnd.getFullYear()&&segStart.getMonth()===segEnd.getMonth()&&segStart.getDate()===segEnd.getDate();
+   const startMinutes=segStart.getHours()*60+segStart.getMinutes(), endMinutes=segEnd.getHours()*60+segEnd.getMinutes();
+   const nextDate=new Date(segStart.getFullYear(),segStart.getMonth(),segStart.getDate()+1);
+   const endsNextDay=segEnd.getFullYear()===nextDate.getFullYear()&&segEnd.getMonth()===nextDate.getMonth()&&segEnd.getDate()===nextDate.getDate();
+   const nightWindow=(startMinutes>=1260&&endsNextDay&&endMinutes<=600)||(segHours>=6&&segHours<=12&&sameDate&&startMinutes>=360&&endMinutes<=1380);
    let fee=0,kind='giá giờ dư';
    if(segHours>12){fee=Number(price.day)||0;kind='giá ngày đêm';}
-   else if(segHours>=6){fee=Number(price.night)||0;kind='giá qua đêm';}
+   else if(segHours>=6&&nightWindow){fee=Number(price.night)||0;kind='giá qua đêm';}
+   else if(segHours>=6){fee=Number(price.day)||0;kind='giá ngày đêm';}
    else {fee=segHours*(Number(price.over)||0);kind='giờ dư × '+fmtMoney(Number(price.over)||0)+'/giờ';}
    const pct=rateForDate(segStart), discount=(segHours>=6?fee*pct/100:0);
    segments.push({index,start:new Date(segStart),end:new Date(segEnd),hours:segHours,fee,kind,pct,discount});
