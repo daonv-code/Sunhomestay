@@ -576,7 +576,7 @@ code, pre, kbd, samp {
 <div class="two"><div class="field"><label for="checkin">Giờ Check-in</label><input id="checkin" type="datetime-local"/></div><div class="field"><label for="checkout">Giờ Check-out</label><input id="checkout" type="datetime-local"/></div></div>
 <div class="two"><div class="field"><label for="guestCount">Số Khách</label><input id="guestCount" min="1" placeholder="Nhập số khách" step="1" type="number" value="2"/></div><div class="field"><label for="manual">Phụ Thu / Giảm Trừ (VNĐ)</label><input id="manual" step="1000" type="number" value="0"/></div></div>
 <div class="field early-night-option"><label class="early-night-card" for="priorNightOccupied"><span class="early-night-icon" aria-hidden="true">🌙</span><span class="early-night-copy"><strong>Báo đêm trước có khách</strong><small>Nếu khách nhận phòng trước 08:00 và thuê 3–5 giờ, tích chọn để áp dụng giá theo tiếng.</small></span><span class="early-night-toggle"><input id="priorNightOccupied" type="checkbox"/><span class="early-night-switch" aria-hidden="true"></span></span></label></div>
-<div class="field"><label class="promo-label">🎁 Chọn Khuyến Mãi</label><div class="promo-options promo-options-custom"><label class="promo-choice"><input checked="" name="promoNight" type="radio" value="0"/> <span>Không áp dụng</span></label><label class="promo-choice promo-custom-choice"><input name="promoNight" type="radio" value="custom"/> <span>Ưu Đãi</span></label></div><div class="field promo-price-field"><label for="promoCustomPrice">Mức giá ưu đãi</label><select aria-label="Giá trị ưu đãi" class="promo-custom-price" id="promoCustomPrice"><option value="300000">300.000đ</option><option value="350000">350.000đ</option><option value="400000">400.000đ</option><option value="450000">450.000đ</option></select></div><p class="note" style="margin-top:0">Chọn “Ưu Đãi”, sau đó chọn mức giá trong ô “Mức giá ưu đãi”. Khi áp dụng giá sale, thời gian đến 10:00 sáng hôm sau tính theo giá gói; từ 10:00 đến tối đa 12:00 trưa hôm sau phụ thu 50.000đ/giờ. Nếu check-out sau 12:00 trưa hôm sau, không áp dụng giá sale và toàn bộ thời gian sẽ tính theo công thức thông thường từ giờ check-in. Quy tắc tính giờ: giá theo tiếng thông thường chỉ áp dụng từ 08:00; nếu nhận trước 08:00 và đêm trước có khách (đã tích lựa chọn), thuê 3–5 giờ được tính giá 3H + giờ dư; trong khung 00:00–10:00 hoặc 06:00–23:00 cùng ngày, khoảng 6–12 giờ tính giá qua đêm; trong khung 21:00–10:00 hôm sau, toàn bộ khoảng tính giá qua đêm; ngoài các khung này, từ 6 giờ trở lên tính giá ngày đêm.</p></div>
+<div class="field"><label class="promo-label">🎁 Chọn Khuyến Mãi</label><div class="promo-options promo-options-custom"><label class="promo-choice"><input checked="" name="promoNight" type="radio" value="0"/> <span>Không áp dụng</span></label><label class="promo-choice promo-custom-choice"><input name="promoNight" type="radio" value="custom"/> <span>Ưu Đãi</span></label></div><div class="field promo-price-field"><label for="promoCustomPrice">Mức giá ưu đãi</label><select aria-label="Giá trị ưu đãi" class="promo-custom-price" id="promoCustomPrice"><option value="300000">300.000đ</option><option value="350000">350.000đ</option><option value="400000">400.000đ</option><option value="450000">450.000đ</option></select></div><p class="note" style="margin-top:0">Chọn “Ưu Đãi”, sau đó chọn mức giá trong ô “Mức giá ưu đãi”. Khi áp dụng giá sale, thời gian đến 10:00 sáng hôm sau tính theo giá gói; từ 10:00 đến tối đa 12:00 trưa hôm sau phụ thu 50.000đ/giờ. Nếu check-out sau 12:00 trưa hôm sau, không áp dụng giá sale và toàn bộ thời gian sẽ tính theo công thức thông thường từ giờ check-in. Quy tắc tính giờ: giá theo tiếng thông thường chỉ áp dụng từ 08:00; nếu nhận trước 08:00 và đêm trước có khách (đã tích lựa chọn), thuê 3–5 giờ được tính giá 3H + giờ dư; trong khung 00:00–10:00 hoặc 08:00–23:00 cùng ngày, khoảng 6–12 giờ tính giá qua đêm; trong khung 21:00–10:00 hôm sau, toàn bộ khoảng tính giá qua đêm; ngoài các khung này, từ 6 giờ trở lên tính giá ngày đêm.</p></div>
 <div class="field"><label for="discount">ƯU ĐÃI THEO TỪNG NGÀY</label><input id="discount" readonly="" type="text" value="Tự động theo ngày"/></div>
 <div class="btnrow"><button class="btn" id="calc">Tính tiền phòng</button><button class="btn secondary" id="reset">Làm mới</button></div><div aria-live="polite" class="status" id="status"></div>
 <p class="note">Công thức khách đặt dài ngày (CS1 + CS2 + CS3): ngày đầu tính 22 giờ + mỗi ngày tiếp theo 24 giờ. Giá theo tiếng áp dụng từ 08:00 trở đi: thuê 5 giờ = giá 3H + 2 giờ dư × đơn giá giờ dư (CS1 + CS2: 30.000đ/giờ; CS3: 50.000đ/giờ). Trước 08:00, thuê 3–5 giờ chỉ được tính theo tiếng khi tích “Báo đêm trước có khách”; giờ dư từ 6 đến 12 giờ tính giá qua đêm; giờ dư trên 12 giờ tính thêm giá ngày đêm. Nếu khách đang ở gần đến giờ checkout mới gia hạn thêm theo giờ, tính 80.000đ/giờ. Gia hạn thêm 1–2 ngày áp dụng lại công thức khách đặt dài ngày. Ưu đãi tự động: Tháng 11 và tháng 12 (áp dụng cả 3 cơ sở): Thứ 2–5 giảm 10%; Thứ 6, Thứ 7 và Chủ Nhật đúng giá (không giảm). Chính sách áp dụng từ 01/11 đến hết 31/12. Ngoài tháng 11–12: Thứ 2–5 giảm 15%, Thứ 6–7 giảm 5%, Chủ Nhật giảm 10%. Với gói khuyến mãi đến 10:00 kế tiếp, ưu đãi chỉ trừ vào phí thời gian còn lại được tính theo giá qua đêm / ngày đêm; không trừ vào giá gói. Có thể nhập phụ thu/giảm trừ âm dương theo thực tế.</p>
@@ -704,14 +704,14 @@ function calculate(){
    const endsNextDay=to.getFullYear()===nextDate.getFullYear()&&to.getMonth()===nextDate.getMonth()&&to.getDate()===nextDate.getDate();
    // 21:00–10:00 ngày hôm sau: toàn bộ khoảng thuê tính giá qua đêm.
    if(fromMinutes>=1260&&endsNextDay&&toMinutes<=600)return true;
-   // Cùng ngày: khung 00:00–10:00 hoặc 06:00–21:00, nếu thuê 6–12 giờ thì tính qua đêm.
+   // Cùng ngày: khung 00:00–10:00 hoặc 08:00–23:00, nếu thuê 6–12 giờ thì tính qua đêm.
    const withinMidnightToTen=sameDate&&fromMinutes>=0&&toMinutes<=600;
-   const withinSixToTwentyThree=sameDate&&fromMinutes>=360&&toMinutes<=1380;
-   return duration>=6&&duration<=12&&(withinMidnightToTen||withinSixToTwentyThree);
+   const withinEightToTwentyThree=sameDate&&fromMinutes>=480&&toMinutes<=1380;
+   return duration>=6&&duration<=12&&(withinMidnightToTen||withinEightToTwentyThree);
  };
  const classifyRemainder=(from,to,duration)=>{
    // Phân loại cả thời gian thuê và giờ dư theo khung giờ:
-   // 00:00–10:00 cùng ngày hoặc 06:00–23:00 cùng ngày: đủ 6–12 giờ tính qua đêm.
+   // 00:00–10:00 cùng ngày hoặc 08:00–23:00 cùng ngày: đủ 6–12 giờ tính qua đêm.
    // 21:00–10:00 ngày hôm sau: toàn bộ khoảng tính qua đêm, bất kể số giờ.
    // Ngoài các khung trên: từ 6 giờ trở lên tính ngày đêm; dưới 6 giờ tính theo giờ.
    if(duration<=0)return 'none';
@@ -732,7 +732,10 @@ function calculate(){
  }else{
  // Quy ước qua đêm đặc biệt: nhận lúc 21:00 và trả lúc 10:00 ngày hôm sau.
  // Thuê qua đêm: thời gian lưu trú nằm trong khung 21:00–10:00 hôm sau.
- const overnightWindow=isNightWindow(start,end);
+ const priorNightOccupied=$('priorNightOccupied').checked;
+ // Khi bật “Báo đêm trước có khách”: tổng thời lượng 6–12 giờ tính giá qua đêm;
+ // trên 12 giờ vẫn theo công thức ngày đêm hiện có.
+ const overnightWindow=isNightWindow(start,end)||(priorNightOccupied&&hours>=6&&hours<=12);
  if(overnightWindow){kind='Qua đêm';base=price.night;}
  else if(hours<=2){kind='2H';base=price.h2;}
  else if(hours<=3 && (start.getHours()>=8 || $('priorNightOccupied').checked)){kind='3H';base=price.h3;}
