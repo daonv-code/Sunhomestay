@@ -978,13 +978,17 @@ $('downloadNote').addEventListener('click',()=>{
    const startMinutes=segStart.getHours()*60+segStart.getMinutes(), endMinutes=segEnd.getHours()*60+segEnd.getMinutes();
    const nextDate=new Date(segStart.getFullYear(),segStart.getMonth(),segStart.getDate()+1);
    const endsNextDay=segEnd.getFullYear()===nextDate.getFullYear()&&segEnd.getMonth()===nextDate.getMonth()&&segEnd.getDate()===nextDate.getDate();
-   const nightWindow=(startMinutes>=1260&&endsNextDay&&endMinutes<=600)||(segHours>=6&&segHours<=12&&sameDate&&startMinutes>=360&&endMinutes<=1380)||(segHours>=6&&segHours<=12&&sameDate&&startMinutes<600&&endMinutes<=600);
+   // Đồng bộ điều kiện giá qua đêm với công thức tính tiền chính:
+   // 21:00–10:00 ngày hôm sau; hoặc cùng ngày 00:00–10:00;
+   // hoặc cùng ngày 08:00–23:00, chỉ khi thời lượng 6–12 giờ.
+   const nightWindow=(startMinutes>=1260&&endsNextDay&&endMinutes<=600)||(segHours>=6&&segHours<=12&&sameDate&&startMinutes>=0&&endMinutes<=600)||(segHours>=6&&segHours<=12&&sameDate&&startMinutes>=480&&endMinutes<=1380);
    const earlyHourlyException=$('priorNightOccupied').checked&&index===1&&start.getHours()<8&&segHours>=3&&segHours<6;
    const hourlyAllowed=segStart.getHours()>=8||earlyHourlyException;
    let fee=0,kind='giá giờ dư';
    if(segHours>12){fee=Number(price.day)||0;kind='giá ngày đêm';}
    else if(segHours>=6&&nightWindow){fee=Number(price.night)||0;kind='giá qua đêm';}
    else if(segHours>=6){fee=Number(price.day)||0;kind='giá ngày đêm';}
+   else if(segHours<6&&index>1){fee=segHours*(Number(price.over)||0);kind='giờ dư × đơn giá giờ dư';}
    else if(hourlyAllowed){fee=segHours<=3?(Number(price.h3)||0):(Number(price.h3)||0)+Math.max(0,segHours-3)*(Number(price.over)||0);kind=segHours<=3?'giá 3H':'giá 3H + giờ dư';}
    else {fee=Number(price.day)||0;kind='giá ngày đêm';}
    const pct=rateForDate(segStart), discount=(segHours>=6?fee*pct/100:0);
@@ -1003,7 +1007,10 @@ $('downloadNote').addEventListener('click',()=>{
    const labelStart=fmtTime(seg.start)+' '+fmtDate(seg.start), labelEnd=fmtTime(seg.end)+' '+fmtDate(seg.end);
    const h=Number.isInteger(seg.hours)?seg.hours:seg.hours.toLocaleString('vi-VN',{maximumFractionDigits:2});
    const afterDiscount=seg.fee-seg.discount;
-   if(seg.hours<6 && (seg.start.getHours()>=8 || ($('priorNightOccupied').checked&&seg.index===1&&start.getHours()<8&&seg.hours>=3))){
+   if(seg.hours<6 && seg.index>1){
+     const hourlyRate=Number(price.over)||0;
+     lines.push('Ngày '+seg.index+'('+weekdayName(seg.start)+'): '+labelStart+' - '+labelEnd+': '+h+'h dư × '+fmtMoney(hourlyRate)+'/giờ = '+fmtMoney(seg.fee)+' (không giảm giá)');
+   }else if(seg.hours<6 && (seg.start.getHours()>=8 || ($('priorNightOccupied').checked&&seg.index===1&&start.getHours()<8&&seg.hours>=3))){
      const hourlyRate=Number(price.over)||0;
      const base3=Number(price.h3)||0;
      const extraHours=Math.max(0,seg.hours-3);
