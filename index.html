@@ -722,7 +722,21 @@ function calculate(){
    return 'day';
  };
  const saleCutoff=new Date(start.getFullYear(),start.getMonth(),start.getDate()+1,12,0,0,0);
- if(promoPrice>0 && end<=saleCutoff){
+ // Thuê đúng 30 ngày: tính 30 mức giá ngày đêm và áp dụng ưu đãi riêng theo từng ngày.
+ // Nhánh này được ưu tiên trước gói khuyến mãi ngắn ngày để thời gian thuê tháng không bị phân loại sai.
+ if(days===30){
+   kind='Ngày đêm (30 ngày)';
+   base=price.day*30;
+   discount=0;
+   const dailyRates=[];
+   for(let i=0;i<30;i++){
+     const billDate=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i);
+     const pct=rateForDate(billDate);
+     dailyRates.push(pct);
+     discount+=price.day*pct/100;
+   }
+   $('discount').value=[...new Set(dailyRates)].map(p=>p+'%').join(' + ')+' · ưu đãi từng ngày (30 ngày)';
+ }else if(promoPrice>0 && end<=saleCutoff){
    // Chỉ áp dụng giá sale nếu khách trả phòng không muộn hơn 12:00 trưa hôm sau.
    // Giá gói sale bao gồm thời gian đến 10:00 hôm sau; từ 10:00 đến giờ trả,
    // phụ thu 50.000đ/giờ, tối đa đến 12:00. Nếu quá 12:00, chuyển hẳn sang công thức thường từ giờ check-in.
@@ -772,7 +786,7 @@ function calculate(){
    const discPct=rateForDate(start);$('discount').value=discPct+'%';
    discount=base*discPct/100;
    if(extra>=price.night)discount+=extra*discPct/100;
- }else if(kind==='Ngày đêm'){
+ }else if(kind==='Ngày đêm' && days!==30){
    // Mỗi mốc giá ngày đêm được giảm theo ngày bắt đầu của khoảng tính phí:
    // 22 giờ đầu tiên, sau đó từng khoảng 24 giờ. Giờ lẻ dưới 6 tiếng không giảm.
    const dailyRates=[];discount=0;
@@ -799,7 +813,7 @@ function calculate(){
      }
    }
    $('discount').value=[...new Set(dailyRates)].map(p=>p+'%').join(' + ')+(remainderHours>=6?' · ưu đãi theo từng mốc tính phí':'');
- }else{$('discount').value='Không áp dụng';discount=0;}
+ }else if(kind!=='Ngày đêm (30 ngày)'){$('discount').value='Không áp dụng';discount=0;}
  } // kết thúc nhánh tính giá thông thường hoặc gói khuyến mãi
  // Làm tròn tiền ưu đãi xuống bội số 1.000đ (ví dụ 70.500đ thành 70.000đ).
  discount=Math.floor(discount/1000)*1000;
@@ -970,7 +984,16 @@ $('downloadNote').addEventListener('click',()=>{
  const weekdayName=d=>['Chủ Nhật','Thứ 2','Thứ 3','Thứ 4','Thứ 5','Thứ 6','Thứ 7'][d.getDay()];
  const rateForDate=d=>{const w=d.getDay(),month=d.getMonth();if(month===10||month===11)return (w>=1&&w<=4)?10:0;return (w>=1&&w<=4)?15:((w===5||w===6)?5:10);};
  const segments=[];let segStart=new Date(start), index=1;
- while(segStart<end && index<=100){
+ const calendarDays=Math.floor((new Date(end.getFullYear(),end.getMonth(),end.getDate())-new Date(start.getFullYear(),start.getMonth(),start.getDate()))/864e5);
+ if(calendarDays===30){
+   // Note thuê 30 ngày: một dòng giá ngày đêm cho mỗi ngày, ưu đãi tính theo đúng thứ/ngày.
+   for(let i=0;i<30;i++){
+     const billDate=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i);
+     const nextBillDate=new Date(billDate.getFullYear(),billDate.getMonth(),billDate.getDate()+1);
+     const pct=rateForDate(billDate), fee=Number(price.day)||0, discount=fee*pct/100;
+     segments.push({index:i+1,start:billDate,end:nextBillDate,hours:24,fee,kind:'giá ngày đêm',pct,discount,monthly:true});
+   }
+ }else while(segStart<end && index<=100){
    const allotted=index===1?22:24;
    const segEnd=new Date(Math.min(end.getTime(),segStart.getTime()+allotted*3600000));
    const segHours=(segEnd-segStart)/3600000;
@@ -1007,7 +1030,9 @@ $('downloadNote').addEventListener('click',()=>{
    const labelStart=fmtTime(seg.start)+' '+fmtDate(seg.start), labelEnd=fmtTime(seg.end)+' '+fmtDate(seg.end);
    const h=Number.isInteger(seg.hours)?seg.hours:seg.hours.toLocaleString('vi-VN',{maximumFractionDigits:2});
    const afterDiscount=seg.fee-seg.discount;
-   if(seg.hours<6 && seg.index>1){
+   if(seg.monthly){
+     lines.push('Ngày '+seg.index+' ('+weekdayName(seg.start)+', '+fmtDate(seg.start)+'): Giá ngày đêm '+fmtMoney(seg.fee)+' - giảm '+seg.pct+'% = '+fmtMoney(afterDiscount));
+   }else if(seg.hours<6 && seg.index>1){
      const hourlyRate=Number(price.over)||0;
      lines.push('Ngày '+seg.index+'('+weekdayName(seg.start)+'): '+labelStart+' - '+labelEnd+': '+h+'h dư × '+fmtMoney(hourlyRate)+'/giờ = '+fmtMoney(seg.fee)+' (không giảm giá)');
    }else if(seg.hours<6 && (seg.start.getHours()>=8 || ($('priorNightOccupied').checked&&seg.index===1&&start.getHours()<8&&seg.hours>=3))){
