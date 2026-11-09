@@ -112,7 +112,7 @@
 /* Room videos: keep the six quick actions in their existing grid. */
 .quick-panel .quick-heading{min-height:32px;gap:10px}.room-video-open{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:32px;padding:6px 11px;border:1px solid #cbddeb;border-radius:8px;background:#edf4fb;color:#285780;font-family:inherit;font-weight:600;font-size:11px;line-height:1.3;cursor:pointer;white-space:nowrap}.room-video-open svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;flex:none}.room-video-open:hover{background:#e1edf8}.room-video-open:disabled{color:#718196;border-color:#e1e7ed;background:#f5f7f9;cursor:default}
 .room-video-dialog{width:min(820px,calc(100vw - 28px));max-height:calc(100dvh - 28px);padding:22px;border:1px solid #d7e3ed;border-radius:16px;background:#fff;color:#193b60;box-shadow:0 20px 90px #0c274540;overflow:auto}.room-video-dialog::backdrop{background:#0a2034a8;backdrop-filter:blur(3px)}.room-video-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin-bottom:18px}.room-video-head h2{font-size:18px;margin:0 0 5px}.room-video-head p{font-size:12px;line-height:1.6;margin:0;color:#6b7e94}.room-video-close{width:36px;height:36px;flex:none;display:grid;place-items:center;border:1px solid #dce5ed;border-radius:9px;background:#f7f9fc;color:#45617d;font-size:24px;cursor:pointer}.room-video-body{display:grid;grid-template-columns:minmax(0,310px) minmax(0,1fr);gap:22px;align-items:start}.room-video-screen{border-radius:12px;background:#10283f;overflow:hidden;display:grid;place-items:center}.room-video-screen video{display:block;width:100%;height:min(58dvh,550px);object-fit:contain;background:#10283f}.room-video-meta{font-size:12px;color:#6b7e94;margin:9px 0 0;line-height:1.6}.room-video-copy-label{display:block;font-size:12px;font-weight:650;margin:0 0 8px}.room-video-caption{display:block;width:100%;resize:none;min-height:150px;border:1px solid #dae5ee;border-radius:10px;background:#f6f9fc;padding:12px;color:#294f73;font:13px/1.8 system-ui,-apple-system,'Segoe UI',sans-serif}.room-video-actions{display:grid;gap:9px;margin-top:14px}.room-video-actions .btn{min-height:42px;font-size:12px}.room-video-actions .btn:disabled{opacity:.6;cursor:wait}.room-video-actions [hidden]{display:none}.room-video-help{margin:14px 0 0;font-size:12px;line-height:1.8;color:#607890}.room-video-status{min-height:20px;margin:10px 0 0;font-size:12px;line-height:1.7;color:#277953;overflow-wrap:anywhere}.room-video-status.error{color:#a64132}
-@media(max-width:600px){.room-video-dialog{padding:16px;width:calc(100vw - 20px);max-height:calc(100dvh - 20px)}.room-video-body{grid-template-columns:1fr;gap:14px}.room-video-screen video{height:44dvh;max-height:400px}.room-video-head{margin-bottom:12px}.room-video-close{width:40px;height:40px}.room-video-head h2{font-size:17px}.room-video-caption{min-height:126px;font-size:13px}.room-video-actions{grid-template-columns:1fr 1fr;gap:8px}.room-video-actions #shareRoomVideo{grid-column:1/-1}.room-video-actions:has(#downloadRoomVideo[hidden]) #copyRoomVideoCaption{grid-column:1/-1}.room-video-actions .btn{min-height:44px;padding:9px;font-size:11px}.room-video-help{font-size:11px;margin-top:10px}.room-video-open{padding:6px 8px;font-size:10px}}
+@media(max-width:600px){.room-video-dialog{padding:16px;width:calc(100vw - 20px);max-height:calc(100dvh - 20px)}.room-video-body{grid-template-columns:1fr;gap:14px}.room-video-screen video{height:44dvh;max-height:400px}.room-video-head{margin-bottom:12px}.room-video-close{width:40px;height:40px}.room-video-head h2{font-size:17px}.room-video-caption{min-height:126px;font-size:13px}.room-video-actions{grid-template-columns:1fr 1fr;gap:8px}.room-video-actions #copyRoomVideoMessage{grid-column:1/-1}.room-video-actions #openGuestRoomVideo{grid-column:1/-1}.room-video-actions .btn{min-height:44px;padding:9px;font-size:11px}.room-video-help{font-size:11px;margin-top:10px}.room-video-open{padding:6px 8px;font-size:10px}}
 
 </style></head>
 <body><main id="app"><div class="dashboard-shell">
@@ -1059,93 +1059,25 @@ document.querySelectorAll('.side-link').forEach(link=>link.addEventListener('cli
  <header class="room-video-head"><div><h2 id="roomVideoTitle">Video phòng</h2><p id="roomVideoSubtitle"></p></div><button class="room-video-close" id="closeRoomVideo" type="button" aria-label="Đóng video">×</button></header>
  <div class="room-video-body"><div><div class="room-video-screen"><video id="roomVideoPlayer" controls playsinline preload="metadata" aria-label="Video giới thiệu phòng"></video></div><p class="room-video-meta" id="roomVideoMeta"></p></div>
  <div><label class="room-video-copy-label" for="roomVideoCaption">Nội dung gửi khách</label><textarea class="room-video-caption" id="roomVideoCaption" readonly spellcheck="false"></textarea>
- <div class="room-video-actions"><button class="btn" id="shareRoomVideo" type="button">Gửi video</button><button class="btn secondary" id="downloadRoomVideo" type="button">Tải video</button><button class="btn secondary" id="copyRoomVideoCaption" type="button">Sao chép giới thiệu</button></div>
- <p class="room-video-help" id="roomVideoHelp">Tải video rồi đính kèm file vào cuộc trò chuyện Zalo hoặc Messenger. Khách nhận file video trực tiếp.</p><p class="room-video-status" id="roomVideoStatus" role="status" aria-live="polite"></p></div></div>
+ <div class="room-video-actions"><button class="btn" id="copyRoomVideoMessage" type="button">Sao chép gửi khách</button><a class="btn secondary" id="openGuestRoomVideo" href="#" target="_blank" rel="noopener noreferrer" style="text-decoration:none">Mở link xem của khách</a></div>
+ <p class="room-video-help" id="roomVideoHelp">Bấm Sao chép gửi khách, rồi dán vào Zalo hoặc Messenger. Nội dung đã có link mở đúng video phòng.</p><p class="room-video-status" id="roomVideoStatus" role="status" aria-live="polite"></p></div></div>
 </dialog>
 
 <script id="room-video-controller">
 (()=>{
  'use strict';
  const videos={"ndh":{"101":{"path":"media/ndh/p101.mp4","poster":"media/ndh/p101.jpg","bytes":11657694,"duration":43.4,"type":"Thường"},"201":{"path":"media/ndh/p201.mp4","poster":"media/ndh/p201.jpg","bytes":5960752,"duration":22.3,"type":"Thường"},"202":{"path":"media/ndh/p202.mp4","poster":"media/ndh/p202.jpg","bytes":9065590,"duration":34.1,"type":"Suite"},"301":{"path":"media/ndh/p301.mp4","poster":"media/ndh/p301.jpg","bytes":3813039,"duration":23.4,"type":"VIP"},"302":{"path":"media/ndh/p302.mp4","poster":"media/ndh/p302.jpg","bytes":10742715,"duration":66.0,"type":"Suite"},"401":{"path":"media/ndh/p401.mp4","poster":"media/ndh/p401.jpg","bytes":9521256,"duration":35.4,"type":"VIP"},"402":{"path":"media/ndh/p402.mp4","poster":"media/ndh/p402.jpg","bytes":4379585,"duration":26.8,"type":"Suite"},"501":{"path":"media/ndh/p501.mp4","poster":"media/ndh/p501.jpg","bytes":10571836,"duration":39.4,"type":"VIP"},"502":{"path":"media/ndh/p502.mp4","poster":"media/ndh/p502.jpg","bytes":9881289,"duration":36.5,"type":"Suite"},"601":{"path":"media/ndh/p601.mp4","poster":"media/ndh/p601.jpg","bytes":20252221,"duration":75.4,"type":"VIP"},"602":{"path":"media/ndh/p602.mp4","poster":"media/ndh/p602.jpg","bytes":9554868,"duration":35.7,"type":"Suite"},"701":{"path":"media/ndh/p701.mp4","poster":"media/ndh/p701.jpg","bytes":13999986,"duration":52.1,"type":"VIP"},"702":{"path":"media/ndh/p702.mp4","poster":"media/ndh/p702.jpg","bytes":9362548,"duration":35.4,"type":"Suite"}},"llq":{"201":{"path":"media/llq/p201.mp4","poster":"media/llq/p201.jpg","bytes":4949367,"duration":18.6,"type":"Suite"},"202":{"path":"media/llq/p202-302.mp4","poster":"media/llq/p202-302.jpg","bytes":6825031,"duration":25.4,"type":"VIP","rooms":["202","302"]},"301":{"path":"media/llq/p301.mp4","poster":"media/llq/p301.jpg","bytes":8113136,"duration":29.9,"type":"Suite"},"302":{"path":"media/llq/p202-302.mp4","poster":"media/llq/p202-302.jpg","bytes":6825031,"duration":25.4,"type":"VIP","rooms":["202","302"]},"401":{"path":"media/llq/p401.mp4","poster":"media/llq/p401.jpg","bytes":7643901,"duration":28.3,"type":"Suite"},"501":{"path":"media/llq/p501.mp4","poster":"media/llq/p501.jpg","bytes":4751937,"duration":17.9,"type":"Suite"},"502":{"path":"media/llq/p502.mp4","poster":"media/llq/p502.jpg","bytes":6355004,"duration":23.3,"type":"VIP"},"601":{"path":"media/llq/p601.mp4","poster":"media/llq/p601.jpg","bytes":12878979,"duration":47.8,"type":"Suite"},"602":{"path":"media/llq/p602.mp4","poster":"media/llq/p602.jpg","bytes":6177175,"duration":22.8,"type":"VIP"}},"dc":{"201":{"path":"media/dc/p201-301-401.mp4","poster":"media/dc/p201-301-401.jpg","bytes":15307959,"duration":56.9,"type":"Gold","rooms":["201","301","401"]},"202":{"path":"media/dc/p202-302-402.mp4","poster":"media/dc/p202-302-402.jpg","bytes":12851814,"duration":47.7,"type":"VIP","rooms":["202","302","402"]},"301":{"path":"media/dc/p201-301-401.mp4","poster":"media/dc/p201-301-401.jpg","bytes":15307959,"duration":56.9,"type":"Gold","rooms":["201","301","401"]},"302":{"path":"media/dc/p202-302-402.mp4","poster":"media/dc/p202-302-402.jpg","bytes":12851814,"duration":47.7,"type":"VIP","rooms":["202","302","402"]},"401":{"path":"media/dc/p201-301-401.mp4","poster":"media/dc/p201-301-401.jpg","bytes":15307959,"duration":56.9,"type":"Gold","rooms":["201","301","401"]},"402":{"path":"media/dc/p202-302-402.mp4","poster":"media/dc/p202-302-402.jpg","bytes":12851814,"duration":47.7,"type":"VIP","rooms":["202","302","402"]},"501":{"path":"media/dc/p501.mp4","poster":"media/dc/p501.jpg","bytes":14272336,"duration":53.1,"type":"Gold"},"502":{"path":"media/dc/p502.mp4","poster":"media/dc/p502.jpg","bytes":15892732,"duration":58.9,"type":"VIP"},"601":{"path":"media/dc/p601.mp4","poster":"media/dc/p601.jpg","bytes":3516443,"duration":21.5,"type":"Suite"},"602":{"path":"media/dc/p602.mp4","poster":"media/dc/p602.jpg","bytes":12656766,"duration":47.1,"type":"Diamond"},"701":{"path":"media/dc/p701.mp4","poster":"media/dc/p701.jpg","bytes":18589763,"duration":68.8,"type":"Suite"}}};
- const byId=id=>document.getElementById(id);
- const dialog=byId('roomVideoDialog'),player=byId('roomVideoPlayer'),open=byId('openRoomVideo'),send=byId('shareRoomVideo');
- const status=byId('roomVideoStatus');
- let selection=null,preparedFile=null,controller=null,session=0;
- const isLocal=location.protocol==='file:';
- const videoSites={ndh:{code:'CS1',name:'Nguyễn Đình Hoàn – Cầu Giấy',slug:'Nguyen_Dinh_Hoan'},llq:{code:'CS2',name:'Lạc Long Quân – Tây Hồ',slug:'Lac_Long_Quan'},dc:{code:'CS3',name:'Đội Cấn – Ba Đình',slug:'Doi_Can'}};
- const filename=(site,room)=>'Sun_Homestay_'+videoSites[site].code+'_P'+room+'_'+videoSites[site].slug+'.mp4';
- const caption=(site,room,meta)=>'Video phòng P'+room+' · '+meta.type+'\n'+videoSites[site].code+': '+videoSites[site].name+'\nBooking / Zalo: 0975.758.403';
- const say=(message,error=false)=>{status.textContent=message;status.classList.toggle('error',error);};
- const canSendFile=file=>typeof navigator.share==='function'&&typeof navigator.canShare==='function'&&navigator.canShare({files:[file]});
- const supportsFileShare=()=>{try{return !isLocal&&canSendFile(new File(['v'],'video.mp4',{type:'video/mp4'}));}catch{return false;}};
- function sync(){
-  const site=byId('site').value,room=byId('room').value,available=Boolean(videos[site]?.[room]);
-  open.disabled=!available;byId('roomVideoButtonLabel').textContent=available?'Video P'+room:'Chưa có video';
-  open.title=available?'Xem và gửi video P'+room:'Video cơ sở này sẽ được bổ sung sau';
- }
- function release(){
-  session++;controller?.abort();controller=null;preparedFile=null;selection=null;
-  player.pause();player.removeAttribute('src');player.removeAttribute('poster');player.load();
-  send.disabled=false;
- }
- function download(){
-  if(!selection)return;
-  const {site,room,meta}=selection;let url=meta.path;
-  if(preparedFile)url=URL.createObjectURL(preparedFile);
-  const a=document.createElement('a');a.href=url;a.download=filename(site,room);document.body.appendChild(a);a.click();a.remove();
-  if(preparedFile)setTimeout(()=>URL.revokeObjectURL(url),30000);
-  say('Đã yêu cầu tải video P'+room+'. Sau khi tải xong, đính kèm file vào Zalo hoặc Messenger.');
- }
- async function prepareFile(mySession){
-  const current=selection;if(!current)return;
-  controller=new AbortController();send.disabled=true;send.textContent='Đang chuẩn bị video…';say('Đang chuẩn bị file để gửi trực tiếp…');
-  try{
-   const response=await fetch(current.meta.path,{credentials:'same-origin',signal:controller.signal});
-   const mime=response.headers.get('content-type')||'';
-   if(!response.ok||mime.includes('text/html'))throw new Error('Không tải được video.');
-   const blob=await response.blob();if(mySession!==session)return;
-   if(blob.size===0)throw new Error('Video trống.');
-   preparedFile=new File([blob],filename(current.site,current.room),{type:'video/mp4'});
-   if(canSendFile(preparedFile)){send.textContent='Gửi video';say('Video đã sẵn sàng. Bấm “Gửi video” để chọn ứng dụng.');}
-   else{send.textContent='Tải video để gửi';say('Trình duyệt này hỗ trợ tải file. Tải video rồi gửi qua ứng dụng trò chuyện.');}
-  }catch(error){
-   if(error.name==='AbortError'||mySession!==session)return;
-   send.textContent='Tải video để gửi';say('Chưa chuẩn bị được file chia sẻ. Anh vẫn có thể dùng nút Tải video.',true);
-  }finally{if(mySession===session)send.disabled=false;}
- }
- function show(){
-  const site=byId('site').value,room=byId('room').value,meta=videos[site]?.[room];if(!meta)return;
-  release();selection={site,room,meta};const mySession=session;
-  byId('roomVideoTitle').textContent='Video phòng P'+room+' · '+meta.type;
-  byId('roomVideoSubtitle').textContent=videoSites[site].code+' · '+videoSites[site].name;
-  byId('roomVideoCaption').value=caption(site,room,meta);
-  byId('roomVideoMeta').textContent=Math.round(meta.duration)+' giây · '+(meta.bytes/1024/1024).toLocaleString('vi-VN',{maximumFractionDigits:1})+' MB · '+(meta.rooms?'Video dùng chung '+meta.rooms.map(r=>'P'+r).join(' / '):'Video phòng thực tế');
-  player.poster=meta.poster;player.src=meta.path;player.load();say('');
-  send.textContent='Tải video để gửi';send.disabled=false;
-  dialog.showModal();
-  const nativeSharing=supportsFileShare();byId('downloadRoomVideo').hidden=!nativeSharing;
-  if(nativeSharing)prepareFile(mySession);
- }
- open.addEventListener('click',show);
- byId('closeRoomVideo').addEventListener('click',()=>dialog.close());
- dialog.addEventListener('close',release);
- dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});
- byId('downloadRoomVideo').addEventListener('click',download);
- send.addEventListener('click',async()=>{
-  if(!selection)return;
-  if(!preparedFile||!canSendFile(preparedFile)){download();return;}
-  const current=selection;send.disabled=true;
-  try{await navigator.share({files:[preparedFile],title:videoSites[current.site].code+' · Video phòng P'+current.room+' · Sun Homestay',text:caption(current.site,current.room,current.meta)});say('Đã mở chia sẻ video P'+current.room+'.');}
-  catch(error){if(error.name==='AbortError')say('Đã hủy chia sẻ.');else say('Ứng dụng chưa nhận được video. Anh chọn Tải video rồi đính kèm file vào cuộc trò chuyện.',true);}
-  finally{send.disabled=false;}
- });
- byId('copyRoomVideoCaption').addEventListener('click',async()=>{
-  const field=byId('roomVideoCaption'),text=field.value;
-  try{if(!navigator.clipboard?.writeText)throw new Error('Clipboard unavailable');await navigator.clipboard.writeText(text);say('Đã sao chép giới thiệu. Anh dán vào cùng video gửi khách.');}
-  catch(error){field.focus();field.select();const copied=document.execCommand('copy');say(copied?'Đã sao chép giới thiệu. Anh dán vào cùng video gửi khách.':'Anh chọn và sao chép nội dung trong ô phía trên.',!copied);}
- });
- player.addEventListener('error',()=>{if(selection)say(isLocal?'Chưa tìm thấy video. Anh giải nén toàn bộ gói tải về và giữ thư mục media bên cạnh file HTML.':'Chưa tải được video. Anh thử mở lại hoặc tải lại trang.',true);});
- byId('site').addEventListener('change',sync);byId('room').addEventListener('change',sync);sync();
+ const viewerOrigin="https://sun-homestay-videos.nkmtkads.chatgpt.site";
+ const videoSites={ndh:{code:'CS1',name:'Nguyễn Đình Hoàn – Cầu Giấy'},llq:{code:'CS2',name:'Lạc Long Quân – Tây Hồ'},dc:{code:'CS3',name:'Đội Cấn – Ba Đình'}};
+ const byId=id=>document.getElementById(id),dialog=byId('roomVideoDialog'),player=byId('roomVideoPlayer'),open=byId('openRoomVideo'),status=byId('roomVideoStatus');
+ let selection=null;
+ const guestLink=(site,room)=>{const u=new URL(viewerOrigin);u.searchParams.set('cs',site);u.searchParams.set('room',room);return u.href;};
+ const message=(site,room,meta)=>'Video phòng P'+room+' · '+meta.type+'\n'+videoSites[site].code+': '+videoSites[site].name+'\nXem video: '+guestLink(site,room)+'\nBooking / Zalo: 0975.758.403';
+ function sync(){const site=byId('site').value,room=byId('room').value,available=Boolean(videos[site]?.[room]);open.disabled=!available;byId('roomVideoButtonLabel').textContent=available?'Video P'+room:'Chưa có video';open.title=available?'Xem video và sao chép gửi khách P'+room:'Chưa có video cho phòng đang chọn';}
+ function release(){selection=null;player.pause();player.removeAttribute('src');player.removeAttribute('poster');player.load();}
+ function show(){const site=byId('site').value,room=byId('room').value,meta=videos[site]?.[room];if(!meta)return;release();selection={site,room,meta};byId('roomVideoTitle').textContent='Video phòng P'+room+' · '+meta.type;byId('roomVideoSubtitle').textContent=videoSites[site].code+' · '+videoSites[site].name;byId('roomVideoCaption').value=message(site,room,meta);byId('openGuestRoomVideo').href=guestLink(site,room);byId('roomVideoMeta').textContent=Math.round(meta.duration)+' giây · '+(meta.bytes/1024/1024).toLocaleString('vi-VN',{maximumFractionDigits:1})+' MB · '+(meta.rooms?'Video dùng chung '+meta.rooms.map(r=>'P'+r).join(' / '):'Video phòng thực tế');player.poster=meta.poster;player.src=meta.path;player.load();status.textContent='';status.classList.remove('error');dialog.showModal();}
+ async function copy(){if(!selection)return;const field=byId('roomVideoCaption');let copied=false;try{if(!navigator.clipboard?.writeText)throw new Error('Clipboard unavailable');await navigator.clipboard.writeText(field.value);copied=true;}catch(error){try{field.focus();field.select();copied=Boolean(document.execCommand('copy'));}catch{copied=false;}}status.textContent=copied?'Đã sao chép. Anh dán vào Zalo hoặc Messenger để gửi khách.':'Anh chọn và sao chép nội dung trong ô phía trên.';status.classList.toggle('error',!copied);}
+ open.addEventListener('click',show);byId('closeRoomVideo').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',release);dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});byId('copyRoomVideoMessage').addEventListener('click',copy);player.addEventListener('error',()=>{if(selection){status.textContent='Chưa tải được video xem trước. Anh vẫn có thể sao chép link gửi khách.';status.classList.add('error');}});byId('site').addEventListener('change',sync);byId('room').addEventListener('change',sync);sync();
 })();
 </script>
 
